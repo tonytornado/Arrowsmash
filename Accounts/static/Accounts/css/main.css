@@ -1,4 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto|Russo+One');
+
 #banner {
     max-height: 300px;
     overflow: hidden;
+}
+
+body {
+    background-color: black;
+    color: whitesmoke;
+    font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+}
+
+h1, h2, h3 {
+    font-family: "Russo One", "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
 }

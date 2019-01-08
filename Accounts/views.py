@@ -26,7 +26,8 @@ def register(request):
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
             user.refresh_from_db()  # This will load the Profile created by the Signal
-            profile_form = ProfileForm(request.POST, instance=user.profile)  # Reload the profile form with the profile instance
+            profile_form = ProfileForm(request.POST,
+                                       instance=user.profile)  # Reload the profile form with the profile instance
             profile_form.full_clean()
             profile_form.save()  # Gracefully save the form
     else:
@@ -43,7 +44,7 @@ def register(request):
 def update_profile(request):
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance=request.user)
-        profile_form = ProfileForm(request.POST, instance=request.user.profile)
+        profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
@@ -64,4 +65,3 @@ class ProfileView(generic.DetailView):
     model = Profile
     queryset = Profile.objects.all()
     template_name = 'profiles/view.html'
-

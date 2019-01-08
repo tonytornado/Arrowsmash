@@ -4,10 +4,10 @@
 {% endblock %}
 
 {% block header %}
-    <img id="banner" src="https://i.ytimg.com/vi/dekuWSSyGGI/maxresdefault.jpg">
+    <img src="https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-129446.jpg">
 {% endblock %}
 {% block content %}
-    <div class="jumbotron text-center">
+    <div class="jumbotron text-center text-dark">
         <h1 class="display-1">Project Arrowstomp</h1>
         {% if user.is_authenticated %}
             Welcome back, {{ user.first_name }}!
@@ -15,7 +15,7 @@
     </div>
     <section>
         <div>This is a project made for players of Dance Dance Revolution. Currently, this one only services players of
-            the latest version. We will be adding more versions over time.
+            the latest version. I will be adding more versions over time.
         </div>
     </section>
 {% endblock %}

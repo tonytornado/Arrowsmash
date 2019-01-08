@@ -4,9 +4,12 @@
     Profile View
 {% endblock %}
 {% block content %}
-    <h1>{{ user.get_full_name }}</h1>
+    <p><img src="{{ profile.avatar.url }}" alt="AVATAR"></p>
+    <h1 class="display-1">{{ profile.user.username }}</h1>
     <div>
-    <ul class="list-group-fluid">
+        <ul class="list-group-flush">
+            <li>{{ profile.tagline }}</li>
+            <li>{{ user.get_full_name }}</li>
         <li>{{ profile.city }}, {{ profile.state}}</li>
     </ul>
     <h4>Personal Bio</h4>

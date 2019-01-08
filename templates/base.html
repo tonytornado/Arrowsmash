@@ -10,6 +10,7 @@
     <title>{% block title %}{% endblock %} - DDR4</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Russo+One" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'Accounts/css/main.css' %}">
 </head>
 <body>
@@ -52,6 +53,17 @@
 </header>
 <div class="container py-4">
     {% block content %}{% endblock %}
+    <hr/>
+    <div class="text-center py-5 jumbotron text-dark">
+        <h4 class="display-3">Pre-&alpha; [v.0.1]</h4>
+        <h5>This is not even fully conceptualized it's so alpha.</h5>
+        <p>Everything here is still in the building stages, from the profiles to the score tracking to the freaking
+            ranking system.
+            I really want to make sure that everything is fully sketched out and planned so that beginners and pros can
+            jump in without worry about where they are or should be.
+            Dance Dance Revolution is - first and foremost - a rhythm game with the emphasis on GAME. You should have
+            fun, mate!</p>
+    </div>
 </div>
 <footer class="text-center py-2 bg-dark text-light">
     <div class="row container mx-auto">
