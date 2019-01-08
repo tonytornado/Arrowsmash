@@ -4,17 +4,18 @@
     Profile View
 {% endblock %}
 {% block content %}
-    <p><img src="{{ profile.avatar.url }}" alt="AVATAR"></p>
+    <p><img src="{{ profile.avatar.url }}" alt="AVATAR" class="img-thumbnail" height="128px" width="128px"></p>
     <h1 class="display-1">{{ profile.user.username }}</h1>
+    <p>{{ profile.gender }}</p>
     <div>
         <ul class="list-group-flush">
             <li>{{ profile.tagline }}</li>
             <li>{{ user.get_full_name }}</li>
-        <li>{{ profile.city }}, {{ profile.state}}</li>
-    </ul>
-    <h4>Personal Bio</h4>
-    <p>{{ profile.bio }}</p>
+            <li>{{ profile.city }}, {{ profile.state }}</li>
+        </ul>
+        <h4>Personal Bio</h4>
+        <p>{{ profile.bio }}</p>
     </div>
-        {% if profile.user.username == user.username %}{% endif %}
-    <a class="btn btn-primary" href="{% url 'home' %}">Home</a>
+    {% if profile.user.username == user.username %}{% endif %}
+    <a class="btn btn-primary btn-block" href="{% url 'home' %}">Home</a>
 {% endblock %}
