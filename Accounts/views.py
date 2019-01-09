@@ -65,3 +65,9 @@ class ProfileView(generic.DetailView):
     model = Profile
     queryset = Profile.objects.all()
     template_name = 'profiles/view.html'
+
+
+class ProfileListing(generic.ListView):
+    model = Profile
+    queryset = Profile.objects.all()
+    template_name = 'profiles/view-all.html'

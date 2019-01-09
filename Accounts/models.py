@@ -1,7 +1,7 @@
+import datetime
+
 from django.contrib.auth.models import User
 from django.db import models
-
-# Create your models here.
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -25,6 +25,11 @@ class Profile(models.Model):
     city = models.CharField(max_length=30)
     state = models.CharField(max_length=2)
     avatar = models.ImageField(upload_to=user_directory_path, default='default.jpg')
+    DOB = models.DateField()
+
+    @property
+    def age(self):
+        return datetime.date.today().year - self.DOB.year
 
     @receiver(post_save, sender=User)
     def update_user_profile(sender, instance, created, **kwargs):

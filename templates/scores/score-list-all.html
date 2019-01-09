@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}
+    Score Listing
+{% endblock %}
+{% block content %}
+    <h2>{{ score_list.count }} Scores logged in total</h2>
+
+
+    <table class="table table-bordered">
+        <thead class="thead-light">
+        <tr>
+            <td>Player</td>
+            <td>Song</td>
+            <td colspan="2">Score</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for score in score_list %}
+            <tr>
+                <td>{{ score.player }}</td>
+                <td>{{ score.song }}</td>
+                <td>{{ score.EX }}</td>
+                <td><a href="{% url 'Scores:score-detail' score.pk %}" class="btn btn-primary">Check</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
