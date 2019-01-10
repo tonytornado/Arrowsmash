@@ -19,13 +19,16 @@ def user_directory_path(instance, filename):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, models.CASCADE)
-    tagline = models.CharField(max_length=100)
+    avatar = models.ImageField(upload_to=user_directory_path, default='default.jpg',
+                               help_text='Show your face, if you would.')
+    rival_code = models.CharField(max_length=9, blank=True)
+    tagline = models.CharField(max_length=100, blank=True)
+    DOB = models.DateField(help_text='When were you born?', blank=True)
     gender = models.CharField(choices=GENDER_CHOICES, default="NB", max_length=2)
-    bio = models.TextField(max_length=5000)
-    city = models.CharField(max_length=30)
-    state = models.CharField(max_length=2)
-    avatar = models.ImageField(upload_to=user_directory_path, default='default.jpg')
-    DOB = models.DateField()
+    city = models.CharField(max_length=30, blank=True)
+    state = models.CharField(max_length=2, blank=True)
+    bio = models.TextField(max_length=5000, blank=True)
+
 
     @property
     def age(self):

@@ -1,12 +1,11 @@
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 from django.shortcuts import render, redirect
 from django.views import generic
 
-from Accounts.forms import ProfileForm, UserForm
+from Accounts.forms import ProfileForm, UserForm, UpdateUserForm, UpdateProfileForm
 from Accounts.models import Profile
 
 
@@ -21,7 +20,7 @@ def logout_view(request):
 @transaction.atomic
 def register(request):
     if request.method == 'POST':
-        user_form = UserCreationForm(request.POST)
+        user_form = UserForm(request.POST)
         profile_form = ProfileForm(request.POST)
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
@@ -31,7 +30,7 @@ def register(request):
             profile_form.full_clean()
             profile_form.save()  # Gracefully save the form
     else:
-        user_form = UserCreationForm()
+        user_form = UserForm()
         profile_form = ProfileForm()
     return render(request, 'registration/register.html', {
         'user_form': user_form,
@@ -43,8 +42,8 @@ def register(request):
 @transaction.atomic
 def update_profile(request):
     if request.method == 'POST':
-        user_form = UserForm(request.POST, instance=request.user)
-        profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        user_form = UpdateUserForm(request.POST, instance=request.user)
+        profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
@@ -53,9 +52,9 @@ def update_profile(request):
         else:
             messages.error(request, 'Please correct the error below.')
     else:
-        user_form = UserForm(instance=request.user)
-        profile_form = ProfileForm(instance=request.user.profile)
-    return render(request, 'profiles/profile.html', {
+        user_form = UpdateUserForm(instance=request.user)
+        profile_form = UpdateProfileForm(instance=request.user.profile)
+    return render(request, 'profiles/profile-update.html', {
         'user_form': user_form,
         'profile_form': profile_form
     })
@@ -64,7 +63,7 @@ def update_profile(request):
 class ProfileView(generic.DetailView):
     model = Profile
     queryset = Profile.objects.all()
-    template_name = 'profiles/view.html'
+    template_name = 'profiles/profile-view.html'
 
 
 class ProfileListing(generic.ListView):

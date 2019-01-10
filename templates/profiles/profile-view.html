@@ -7,7 +7,7 @@
 {% block content %}
 
     <section class="row mx-auto col-6">
-        <div class="col-sm-6">
+        <div class="col-sm-6 d-flex align-items-center">
             <p>
                 <img src="{{ profile.avatar.url }}" alt="AVATAR" class="img-thumbnail img-circle-avatar">
             </p>
@@ -17,9 +17,10 @@
             <p class="lead">{{ profile.age }} {{ profile.get_gender_display }}</p>
             <div>
                 <ul class="list-group">
-                    <li class="list-group-item bg-dark">Name: {{ user.get_full_name }}</li>
+                    <li class="list-group-item bg-dark">Name: {{ profile.user.get_full_name }}</li>
                     <li class="list-group-item bg-dark">Location: {{ profile.city }}, {{ profile.state }}</li>
                     <li class="list-group-item bg-dark">"{{ profile.tagline }}"</li>
+                    <li class="list-group-item bg-dark">{{ profile.rival_code }}</li>
                 </ul>
                 <br/>
                 <h3>Personal Bio</h3>
