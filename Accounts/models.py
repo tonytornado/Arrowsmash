@@ -6,9 +6,12 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 GENDER_CHOICES = (
-    ("NB", "Non-Binary"),
+    ["NB", "Non-Binary"],
+    ["GQ", "Genderfluid"],
     ["M", "Male"],
-    ("F", "Female"),
+    ["F", "Female"],
+    ["TM", "Trans-Male"],
+    ["TF", "Trans-Female"]
 )
 
 
@@ -22,13 +25,12 @@ class Profile(models.Model):
     avatar = models.ImageField(upload_to=user_directory_path, default='default.jpg',
                                help_text='Show your face, if you would.')
     rival_code = models.CharField(max_length=9, blank=True)
-    tagline = models.CharField(max_length=100, blank=True)
+    tagline = models.CharField(max_length=100, blank=True, help_text="It's your life. What's its tag line?")
     DOB = models.DateField(help_text='When were you born?', blank=True)
-    gender = models.CharField(choices=GENDER_CHOICES, default="NB", max_length=2)
+    gender = models.CharField(choices=GENDER_CHOICES, default="NB", max_length=2, help_text='We have to ask.')
     city = models.CharField(max_length=30, blank=True)
     state = models.CharField(max_length=2, blank=True)
     bio = models.TextField(max_length=5000, blank=True)
-
 
     @property
     def age(self):

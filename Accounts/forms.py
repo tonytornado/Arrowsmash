@@ -1,5 +1,5 @@
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Row, Column
+from crispy_forms.layout import Layout, Row, Column, HTML
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -71,12 +71,19 @@ class UpdateProfileForm(forms.ModelForm):
                 css_class='form-row'
             ),
             Row(
-                Column("city", css_class='form-group col-md-8 mb-0'),
-                Column('state', css_class='form-group col-md-4 mb-0'),
+                Column("city", css_class='form-group col-sm-10 mb-0'),
+                Column('state', css_class='form-group col-sm-2 mb-0'),
                 css_class='form-row'
             ),
             'bio',
             'gender',
             Row(
-                Column('avatar', css_class='form-group col-md-6 mx-auto'), css_class='form-row')
+                Column(
+                    HTML(
+                        """{% if profile_form.avatar.value %}
+                        <img class="img-responsive img-thumbnail img-circle-avatar mr-auto" src={{ profile_form.avatar.value.url }}>
+                        {% endif %}""", ), css_class='col-sm-6'),
+                Column('avatar', css_class='col-sm-6 d-flex align-items-middle'),
+                css_class='col-sm-8 mx-auto py-4'
+            )
         )

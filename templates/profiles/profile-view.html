@@ -5,12 +5,9 @@
 {% endblock %}
 
 {% block content %}
-
-    <section class="row mx-auto col-6">
+    <section class="row mx-auto col-8">
         <div class="col-sm-6 d-flex align-items-center">
-            <p>
-                <img src="{{ profile.avatar.url }}" alt="AVATAR" class="img-thumbnail img-circle-avatar">
-            </p>
+            <img src="{{ profile.avatar.url }}" alt="AVATAR" class="img-thumbnail img-responsive">
         </div>
         <div class="col-sm-6">
             <h3>{{ profile.user.username }}</h3>
@@ -36,7 +33,6 @@
 
         <br/>
     </div>
-
     {% if profile.user.username == user.username %}
 
     {% endif %}
