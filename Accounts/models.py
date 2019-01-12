@@ -7,7 +7,7 @@ from django.dispatch import receiver
 
 GENDER_CHOICES = (
     ["NB", "Non-Binary"],
-    ["GQ", "Genderfluid"],
+    ["GQ", "Gender-fluid"],
     ["M", "Male"],
     ["F", "Female"],
     ["TM", "Trans-Male"],
@@ -21,6 +21,9 @@ def user_directory_path(instance, filename):
 
 
 class Profile(models.Model):
+    """
+    Main profile class that needs all the work.
+    """
     user = models.OneToOneField(User, models.CASCADE)
     avatar = models.ImageField(upload_to=user_directory_path, default='default.jpg',
                                help_text='Show your face, if you would.')

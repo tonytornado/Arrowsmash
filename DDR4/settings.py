@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Accounts.apps.AccountsConfig',
     'Scores.apps.ScoresConfig',
-    'A.apps.AConfig',
+    'Tourney.apps.TourneyConfig',
     'crispy_forms'
 ]
 

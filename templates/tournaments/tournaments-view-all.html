@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Tournaments!
+{% endblock %}
+{% block header %}
+{% endblock %}
+{% block content %}
+    <h2>Tournament Mode!</h2>
+    {% for tournament in tournament_list %}
+        <a href="{% url 'Tourney:tournament-view' tournament.pk %}">{{ tournament.Name }}</a><br/>
+    {% endfor %}
+
+{% endblock %}

@@ -9,6 +9,7 @@ urlpatterns = [
     # path('admin/', admin.site.urls),
     path('', views.ScoreListing.as_view(), name='score-list'),
     path('detail/<int:pk>', views.ScoreDetail.as_view(), name='score-detail'),
+    path('submit/', views.ScoreSubmit.as_view(), name='score-submit')
 ]
 
 if settings.DEBUG:

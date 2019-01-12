@@ -1,6 +1,7 @@
 from django.db import models
-
 # Create your models here.
+from django.urls import reverse
+
 from Accounts.models import Profile, user_directory_path
 
 DIFFICULTY_RATING = (
@@ -11,23 +12,13 @@ DIFFICULTY_RATING = (
     ('C', 'CHALLENGE'),
 )
 
-SCORE_RANK = (
-    "AAA",
-    "AA",
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-)
-
 
 class Mix(models.Model):
     """
     Mix data
     """
-    Name: models.CharField(max_length=150)
-    Year: models.IntegerField()
+    name: models.CharField(max_length=150)
+    year: models.IntegerField()
 
     @staticmethod
     def song_count():
@@ -38,12 +29,12 @@ class Song(models.Model):
     """
     Songs data
     """
-    Name: models.CharField(max_length=100)
-    Artist: models.CharField(max_length=100)
-    BPM: models.IntegerField(max_length=3)
-    Difficulty: models.CharField(choices=DIFFICULTY_RATING, max_length=1)
-    Steps: models.IntegerField()
-    Folder: models.ForeignKey(Mix, models.CASCADE)
+    name: models.CharField(max_length=100)
+    artist: models.CharField(max_length=100)
+    bpm: models.IntegerField(max_length=3)
+    difficulty: models.CharField(choices=DIFFICULTY_RATING, max_length=1)
+    steps: models.IntegerField()
+    folder: models.ForeignKey(Mix, models.CASCADE)
 
 
 class Score(models.Model):
@@ -52,6 +43,12 @@ class Score(models.Model):
     """
     song: models.ForeignKey(Song, models.CASCADE)
     player: models.ForeignKey(Profile, models.CASCADE)
-    score_rank: models.CharField(choices=SCORE_RANK, max_length=3)
-    EX: models.IntegerField()
-    Proof: models.ImageField(upload_to=user_directory_path)
+    score_rank: models.CharField(max_length=3)
+    ex: models.IntegerField()
+    proof: models.ImageField(upload_to=user_directory_path)
+
+    def get_absolute_url(self):
+        return reverse('Scores:score-detail', kwargs={'pk': self.pk})
+
+    def __str__(self):
+        return "{}, {}".format(self.Song, self.Player)

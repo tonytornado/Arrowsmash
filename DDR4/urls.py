@@ -26,6 +26,7 @@ urlpatterns = [
     path('profile/', views.ProfileListing.as_view(), name='profile-list'),
     path('profile/<int:pk>/', views.ProfileView.as_view(), name='view-profile'),
     path('scores/', include('Scores.urls', namespace='Scores')),
+    path('tournaments/', include('Tourney.urls', namespace='Tourney')),
     path('register/', views.register, name='register'),
     path('accounts/', include('Accounts.urls', namespace='Accounts')),
 ]
