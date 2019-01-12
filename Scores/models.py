@@ -30,6 +30,7 @@ class Song(models.Model):
     artist = models.CharField(max_length=100)
     bpm = models.IntegerField()
     difficulty = models.CharField(choices=DIFFICULTY_RATING, max_length=1)
+    rating = models.IntegerField()
     steps = models.IntegerField()
     folder = models.ForeignKey(Mix, models.CASCADE)
 

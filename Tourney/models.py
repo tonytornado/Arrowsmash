@@ -37,7 +37,6 @@ class Tournament(models.Model):
 
 class TournamentResult(models.Model):
     tourney = models.ForeignKey(Tournament, models.CASCADE)
-    entrants = models.ForeignKey(Profile, on_delete=models.DO_NOTHING)
     winner = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, related_name='winner')
     second = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, related_name='second_place')
     third = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, related_name='third_place')
@@ -50,3 +49,6 @@ class TournamentEntry(models.Model):
     tourney = models.ForeignKey(Tournament, models.CASCADE)
     entrants = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, related_name='entrant')
     division = models.CharField(choices=DIVISION_CHOICES, max_length=1)
+
+    def __str__(self):
+        return "{} - {} - {}".format(self.tourney.name, self.entrants.rival_code, self.division)
