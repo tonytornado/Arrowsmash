@@ -18,6 +18,9 @@ class Prize(models.Model):
     place3 = models.IntegerField()
     place4 = models.IntegerField()
 
+    def __str__(self):
+        return self.title
+
 
 class Tournament(models.Model):
     name = models.CharField(max_length=100)
@@ -28,6 +31,9 @@ class Tournament(models.Model):
     prize_Pool = models.ForeignKey(Prize, models.CASCADE)
     Date = models.DateField()
 
+    def __str__(self):
+        return "{}, {}".format(self.name, self.location)
+
 
 class TournamentResult(models.Model):
     tourney = models.ForeignKey(Tournament, models.CASCADE)
@@ -35,6 +41,9 @@ class TournamentResult(models.Model):
     winner = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, related_name='winner')
     second = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, related_name='second_place')
     third = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, related_name='third_place')
+
+    def __str__(self):
+        return "{}".format(self.tourney.name)
 
 
 class TournamentEntry(models.Model):

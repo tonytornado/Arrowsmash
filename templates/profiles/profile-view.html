@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load staticfiles %}
+
 {% block title %}
     Profile View
 {% endblock %}
@@ -16,8 +18,10 @@
                 <ul class="list-group">
                     <li class="list-group-item bg-dark">Name: {{ profile.user.get_full_name }}</li>
                     <li class="list-group-item bg-dark">Location: {{ profile.city }}, {{ profile.state }}</li>
-                    <li class="list-group-item bg-dark">"{{ profile.tagline }}"</li>
-                    <li class="list-group-item bg-dark">{{ profile.rival_code }}</li>
+                    {% if profile.tagline %}
+                        <li class="list-group-item bg-dark">"{{ profile.tagline }}"</li>{% endif %}
+                    {% if profile.rival_code %}
+                        <li class="list-group-item bg-dark">{{ profile.rival_code }}</li>{% endif %}
                 </ul>
                 <br/>
                 <h3>Personal Bio</h3>

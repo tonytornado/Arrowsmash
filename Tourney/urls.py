@@ -1,7 +1,7 @@
+from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 
-from DDR4 import settings
 from Tourney import views
 
 app_name = "Tourney"

@@ -6,7 +6,7 @@
 {% endblock %}
 {% block content %}
     <h2>Sign up</h2>
-    <form method="post" novalidate>
+    <form method="post" enctype="multipart/form-data" novalidate>
         {% csrf_token %}
         {{ user_form|crispy }}
         {{ profile_form|crispy }}

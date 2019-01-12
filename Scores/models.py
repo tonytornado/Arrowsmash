@@ -21,6 +21,9 @@ class Mix(models.Model):
     def song_count():
         return Song.objects.count(Mix)
 
+    def __str__(self):
+        return "{} - {}".format(self.name, self.year)
+
 
 class Song(models.Model):
     name = models.CharField(max_length=100)
@@ -29,6 +32,9 @@ class Song(models.Model):
     difficulty = models.CharField(choices=DIFFICULTY_RATING, max_length=1)
     steps = models.IntegerField()
     folder = models.ForeignKey(Mix, models.CASCADE)
+
+    def __str__(self):
+        return "{} [{}] - {}".format(self.name, self.difficulty, self.folder.name)
 
 
 class Score(models.Model):

@@ -27,7 +27,7 @@ def register(request):
             user.refresh_from_db()  # This will load the Profile created by the Signal
             profile_form = ProfileForm(request.POST,
                                        instance=user.profile)  # Reload the profile form with the profile instance
-            # profile_form.full_clean()
+            profile_form.full_clean()
             profile_form.save()  # Gracefully save the form
     else:
         user_form = UserForm()

@@ -5,9 +5,9 @@
 
 {% endblock %}
 {% block content %}
-    <form method="post" novalidate>
+    <form method="post" enctype="multipart/form-data" novalidate>
         {% csrf_token %}
-        {{ form }}
-        <button type="submit" class="btn btn-block btn-success">Submit</button>
+        {{ form|crispy }}
+        <input type="submit" class="btn btn-block btn-success">
     </form>
 {% endblock %}

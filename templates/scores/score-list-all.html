@@ -4,8 +4,6 @@
 {% endblock %}
 {% block content %}
     <h2>{{ score_list.count }} Scores logged in total</h2>
-
-
     <table class="table table-bordered">
         <thead class="thead-light">
         <tr>
@@ -14,12 +12,12 @@
             <td colspan="2">Score</td>
         </tr>
         </thead>
-        <tbody>
+        <tbody class="">
         {% for score in score_list %}
-            <tr>
+            <tr class="">
                 <td>{{ score.player }}</td>
                 <td>{{ score.song }}</td>
-                <td>{{ score.EX }}</td>
+                <td>{{ score.ex }}</td>
                 <td><a href="{% url 'Scores:score-detail' score.pk %}" class="btn btn-primary">Check</a></td>
             </tr>
         {% endfor %}
