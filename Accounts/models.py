@@ -25,11 +25,10 @@ class Profile(models.Model):
     Main profile class that needs all the work.
     """
     user = models.OneToOneField(User, models.CASCADE)
-    avatar = models.ImageField(upload_to=user_directory_path, default='default.jpg',
-                               help_text='Show your face, if you would.')
+    avatar = models.ImageField(upload_to=user_directory_path, default='default.jpg')
     rival_code = models.CharField(max_length=9, blank=True)
     tagline = models.CharField(max_length=100, blank=True, help_text="It's your life. What's its tag line?")
-    DOB = models.DateField(help_text='When were you born?', blank=True)
+    DOB = models.DateField(null=True, blank=True)
     gender = models.CharField(choices=GENDER_CHOICES, default="NB", max_length=2, help_text='We have to ask.')
     city = models.CharField(max_length=30, blank=True)
     state = models.CharField(max_length=2, blank=True)

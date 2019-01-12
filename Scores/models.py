@@ -14,11 +14,8 @@ DIFFICULTY_RATING = (
 
 
 class Mix(models.Model):
-    """
-    Mix data
-    """
-    name: models.CharField(max_length=150)
-    year: models.IntegerField()
+    name = models.CharField(max_length=150)
+    year = models.IntegerField()
 
     @staticmethod
     def song_count():
@@ -26,29 +23,23 @@ class Mix(models.Model):
 
 
 class Song(models.Model):
-    """
-    Songs data
-    """
-    name: models.CharField(max_length=100)
-    artist: models.CharField(max_length=100)
-    bpm: models.IntegerField(max_length=3)
-    difficulty: models.CharField(choices=DIFFICULTY_RATING, max_length=1)
-    steps: models.IntegerField()
-    folder: models.ForeignKey(Mix, models.CASCADE)
+    name = models.CharField(max_length=100)
+    artist = models.CharField(max_length=100)
+    bpm = models.IntegerField()
+    difficulty = models.CharField(choices=DIFFICULTY_RATING, max_length=1)
+    steps = models.IntegerField()
+    folder = models.ForeignKey(Mix, models.CASCADE)
 
 
 class Score(models.Model):
-    """
-    For logging scores into a linked table.
-    """
-    song: models.ForeignKey(Song, models.CASCADE)
-    player: models.ForeignKey(Profile, models.CASCADE)
-    score_rank: models.CharField(max_length=3)
-    ex: models.IntegerField()
-    proof: models.ImageField(upload_to=user_directory_path)
+    song = models.ForeignKey(Song, models.CASCADE)
+    player = models.ForeignKey(Profile, models.CASCADE)
+    score_rank = models.CharField(max_length=3)
+    ex = models.IntegerField()
+    proof = models.ImageField(upload_to=user_directory_path)
 
     def get_absolute_url(self):
         return reverse('Scores:score-detail', kwargs={'pk': self.pk})
 
     def __str__(self):
-        return "{}, {}".format(self.Song, self.Player)
+        return "{}, {}".format(self.song, self.player)
