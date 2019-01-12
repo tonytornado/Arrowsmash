@@ -21,14 +21,15 @@ def logout_view(request):
 def register(request):
     if request.method == 'POST':
         user_form = UserForm(request.POST)
-        profile_form = ProfileForm(request.POST)
+        profile_form = ProfileForm(request.POST, request.FILES)
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
             user.refresh_from_db()  # This will load the Profile created by the Signal
-            profile_form = ProfileForm(request.POST,
+            profile_form = ProfileForm(request.POST, request.FILES,
                                        instance=user.profile)  # Reload the profile form with the profile instance
             profile_form.full_clean()
             profile_form.save()  # Gracefully save the form
+            return redirect('Accounts:login')
     else:
         user_form = UserForm()
         profile_form = ProfileForm()
@@ -50,7 +51,7 @@ def update_profile(request):
             messages.success(request, 'Your profile was successfully updated!')
             return redirect('home')
         else:
-            messages.error(request, 'Please correct the error below.')
+            messages.error(request, 'Please correct the errors below.')
     else:
         user_form = UpdateUserForm(instance=request.user)
         profile_form = UpdateProfileForm(instance=request.user.profile)

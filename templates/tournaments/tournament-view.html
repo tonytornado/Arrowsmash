@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Tournament Detail - {{ tournament.name }}
+{% endblock %}
+{% block content %}
+    <h2>Tournament Detail</h2>
+    <ul class="list-group bg-dark">
+        <li class="list-group-item bg-dark">Name: {{ tournament.name }}</li>
+        <li class="list-group-item bg-dark">Location: {{ tournament.location }}</li>
+        <li class="list-group-item bg-dark">Date: {{ tournament.Date }}</li>
+        <li class="list-group-item bg-dark">Rules: {{ tournament.rules }}</li>
+        <li class="list-group-item bg-dark">
+            Organizer: {{ tournament.organizer.first_name }} {{ tournament.organizer.last_name }}</li>
+        <li class="list-group-item bg-dark">Entrants: {% for foo in tournament.tournamententry_set.all %}
+            {{ foo.entrants }}<br/>
+        {% endfor %}
+        </li>
+        <li class="list-group-item bg-dark"></li>
+    </ul>
+{% endblock %}

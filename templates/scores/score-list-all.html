@@ -3,22 +3,22 @@
     Score Listing
 {% endblock %}
 {% block content %}
-    <h2>{{ score_list.count }} Scores logged in total</h2>
-    <table class="table table-bordered">
+    <h2>Scores logged: {{ score_list.count }}</h2>
+    <table class="table table-striped">
         <thead class="thead-light">
         <tr>
-            <td>Player</td>
-            <td>Song</td>
-            <td colspan="2">Score</td>
+            <th scope="col">Player</th>
+            <th scope="col">Song</th>
+            <th scope="col" colspan="2">Score</th>
         </tr>
         </thead>
         <tbody class="">
         {% for score in score_list %}
             <tr class="">
-                <td>{{ score.player }}</td>
+                <td>{{ score.player.user.username }}</td>
                 <td>{{ score.song }}</td>
                 <td>{{ score.ex }}</td>
-                <td><a href="{% url 'Scores:score-detail' score.pk %}" class="btn btn-primary">Check</a></td>
+                <td><a href="{% url 'Scores:score-detail' score.pk %}" class="btn btn-primary btn-block">Check</a></td>
             </tr>
         {% endfor %}
         </tbody>

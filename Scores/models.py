@@ -12,6 +12,12 @@ DIFFICULTY_RATING = (
     ('C', 'CHALLENGE'),
 )
 
+SCORE_RANK = [
+    ('AAA', 'AAA'),
+    ('AA', 'AA'),
+    ('A', 'A'),
+]
+
 
 class Mix(models.Model):
     name = models.CharField(max_length=150)
@@ -41,7 +47,7 @@ class Song(models.Model):
 class Score(models.Model):
     song = models.ForeignKey(Song, models.CASCADE)
     player = models.ForeignKey(Profile, models.CASCADE)
-    score_rank = models.CharField(max_length=3)
+    score_rank = models.CharField(choices=SCORE_RANK, max_length=3)
     ex = models.IntegerField()
     proof = models.ImageField(upload_to=user_directory_path)
 

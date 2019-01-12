@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto|Russo+One');
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Russo+One');
 
 #banner {
     max-height: 300px;
@@ -8,7 +8,7 @@
 body {
     background-color: black;
     color: whitesmoke;
-    font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+    font-family: "Montserrat", "Lucida Grande", Verdana, Arial, sans-serif;
 }
 
 h1, h2, h3 {

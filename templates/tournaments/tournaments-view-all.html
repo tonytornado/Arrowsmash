@@ -7,8 +7,11 @@
 {% endblock %}
 {% block content %}
     <h2>Tournament Mode!</h2>
+    <ul class="list-group">
     {% for tournament in tournament_list %}
-        <a href="{% url 'Tourney:tournament-view' tournament.pk %}">{{ tournament.Name }}</a><br/>
+        <li class="list-group-item bg-dark"><a
+                href="{% url 'Tourney:tournament-view' tournament.pk %}">{{ tournament.name }}</a></li>
     {% endfor %}
+    </ul>
 
 {% endblock %}

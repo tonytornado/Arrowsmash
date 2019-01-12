@@ -22,7 +22,7 @@ from Accounts import views
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='double_akumu_shinjen'),
     path('profile/', views.ProfileListing.as_view(), name='profile-list'),
     path('profile/<int:pk>/', views.ProfileView.as_view(), name='view-profile'),
     path('scores/', include('Scores.urls', namespace='Scores')),

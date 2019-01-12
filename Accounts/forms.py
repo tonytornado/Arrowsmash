@@ -22,10 +22,10 @@ class ProfileForm(forms.ModelForm):
         exclude = ('user', 'tagline', 'bio')
         labels = {
             'rival_code': 'E-AMUSE Rival Code [Not Required, but encouraged!]',
-            'tagline': 'What would you say your life is like?',
         }
         help_texts = {
             'rival_code': 'XXXX-XXXX format, please',
+            'avatar': 'Show your face, if you would. Nothing lewd, please.',
         }
 
 

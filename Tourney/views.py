@@ -10,7 +10,7 @@ class TournamentViewAll(generic.ListView):
     template_name = "tournaments/tournaments-view-all.html"
 
 
-class TournamentView(generic.ListView):
+class TournamentView(generic.DetailView):
     model = Tournament
     queryset = Tournament.objects.all()
     template_name = "tournaments/tournament-view.html"
