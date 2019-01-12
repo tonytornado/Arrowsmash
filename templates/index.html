@@ -4,18 +4,24 @@
 {% endblock %}
 
 {% block header %}
-    <img src="https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-129446.jpg">
+    <img src="https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-129446.jpg" alt="banner">
 {% endblock %}
 {% block content %}
     <div class="jumbotron text-center text-dark">
         <h1 class="display-1">Project Arrowstomp</h1>
         {% if user.is_authenticated %}
             Welcome back, {{ user.first_name }}!
+            <br/>
+            <small>Last login: {{ user.last_login }}</small>
         {% endif %}
     </div>
     <section>
         <div>This is a project made for players of Dance Dance Revolution. Currently, this one only services players of
             the latest version. I will be adding more versions over time.
         </div>
+        <hr/>
+    </section>
+    <section>
+        {% lorem 5 p random %}
     </section>
 {% endblock %}

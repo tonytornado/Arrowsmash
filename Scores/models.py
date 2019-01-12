@@ -50,6 +50,7 @@ class Score(models.Model):
     score_rank = models.CharField(choices=SCORE_RANK, max_length=3)
     ex = models.IntegerField()
     proof = models.ImageField(upload_to=user_directory_path)
+    date = models.DateTimeField(auto_now_add=True)
 
     def get_absolute_url(self):
         return reverse('Scores:score-detail', kwargs={'pk': self.pk})
