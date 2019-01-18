@@ -19,7 +19,8 @@
         <div class="col-sm-6">
             <div>
                 <ul class="list-group">
-                    <li class="list-group-item bg-dark">Name: {{ profile.user.get_full_name }}</li>
+                    {% if profile.user.get_full_name %}
+                        <li class="list-group-item bg-dark">Name: {{ profile.user.get_full_name }}</li>{% endif %}
                     <li class="list-group-item bg-dark">Location: {{ profile.city }}, {{ profile.state }}</li>
                     {% if profile.tagline %}
                         <li class="list-group-item bg-dark">"{{ profile.tagline }}"</li>{% endif %}
@@ -68,48 +69,49 @@
         {% endif %}
 
 
-        <div class="col-sm-6">
-            <h3 class="border">Tournament Results</h3>
-            <table class="table table-borderless">
-                <thead class="thead-light">
-                <tr>
-                    <th scope="col">Placement</th>
-                    <th scope="col">Tournament</th>
-                    <th scope="col">Date</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% if profile.winner.count > 0 %}
-                    {% for tourney in profile.winner.all %}
-                        <tr>
-                            <td scope="col">Winner!</td>
-                            <td>{{ tourney.tourney }}</td>
-                            <td>{{ tourney.tourney.Date }}</td>
-                        </tr>
-                    {% endfor %}
-                {% elif profile.second_place.count > 0 %}
-                    {% for tourney in profile.second_place.all %}
-                        <tr>
-                            <td scope="col">2nd</td>
-                            <td>{{ tourney.tourney }}</td>
-                            <td>{{ tourney.tourney.Date }}</td>
-                        </tr>{% endfor %}
-                {% elif profile.third_place.count > 0 %}
-                    {% for tourney in profile.third_place.all %}
-                        <tr>
-                            <td scope="col">3rd</td>
-                            <td>{{ tourney.tourney }}</td>
-                            <td>{{ tourney.tourney.Date }}</td>
-                        </tr>
-                    {% endfor %}
-                {% else %}
+        {% if profile.winner.count > 0 or profile.second_place.count > 0 or profile.third_place.count > 0 %}
+            <div class="col-sm-6">
+                <h3 class="border">Tournament Results</h3>
+                <table class="table table-borderless">
+                    <thead class="thead-light">
                     <tr>
-                        <td colspan="3">No Data Available</td>
+                        <th scope="col">Placement</th>
+                        <th scope="col">Tournament</th>
+                        <th scope="col">Date</th>
                     </tr>
-                {% endif %}
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                    {% if profile.winner.count > 0 %}
+                        {% for tourney in profile.winner.all %}
+                            <tr>
+                                <td scope="col">Winner!</td>
+                                <td>{{ tourney.tourney }}</td>
+                                <td>{{ tourney.tourney.Date }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% elif profile.second_place.count > 0 %}
+                        {% for tourney in profile.second_place.all %}
+                            <tr>
+                                <td scope="col">2nd</td>
+                                <td>{{ tourney.tourney }}</td>
+                                <td>{{ tourney.tourney.Date }}</td>
+                            </tr>{% endfor %}
+                    {% elif profile.third_place.count > 0 %}
+                        {% for tourney in profile.third_place.all %}
+                            <tr>
+                                <td scope="col">3rd</td>
+                                <td>{{ tourney.tourney }}</td>
+                                <td>{{ tourney.tourney.Date }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="3">No Data Available</td>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>{% endif %}
 
         {% if profile.age == 21 %}
             <h3 class="">You old, right?</h3>

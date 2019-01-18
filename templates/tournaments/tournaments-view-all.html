@@ -7,12 +7,17 @@
 {% endblock %}
 {% block content %}
     <h2>Tournament Mode!</h2>
-    <ul class="list-group">
+
+    {% if tournament_list.count > 0 %}
+        <ul class="list-group">
     {% for tournament in tournament_list %}
         <li class="list-group-item bg-dark"><a
                 href="{% url 'Tourney:tournament-view' tournament.pk %}"
                 class="btn btn-block btn-outline-light">{{ tournament.name }}</a></li>
     {% endfor %}
     </ul>
+    {% else %}
+        <h4>No tournaments found.</h4>
+    {% endif %}
 
 {% endblock %}
