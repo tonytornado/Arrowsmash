@@ -8,9 +8,10 @@
 
 {% block content %}
     <header class="text-center">
-        <h3 class="border">{{ profile.user.username }}</h3>
-        <p class="lead">{{ profile.age }} | {{ profile.get_gender_display }} | {{ profile.score_set.count }}
-            score{{ profile.score_set.count|pluralize }}</p>
+        <h2 class="border mb-0">{{ profile.user.username }}</h2>
+        <p class="text-right border bg-primary pt-0">{{ profile.age }} | {{ profile.get_gender_display }}
+            | {{ profile.score_set.count }}
+            score{{ profile.score_set.count|pluralize }} &nbsp;</p>
     </header>
     <section class="row mx-auto col-10">
         <div class="col-sm-6 d-flex align-items-center">
@@ -25,12 +26,15 @@
                     {% if profile.tagline %}
                         <li class="list-group-item bg-dark">"{{ profile.tagline }}"</li>{% endif %}
                     {% if profile.rival_code %}
-                        <li class="list-group-item bg-dark">{{ profile.rival_code }}</li>{% endif %}
+                        <li class="list-group-item bg-dark">Rival Code: {{ profile.rival_code }}</li>{% endif %}
                 </ul>
                 <br/>
             </div>
         </div>
         <hr/>
+        {% if profile.user_friend_id_1 != profile.user_friend_id_2 %}
+
+        {% endif %}
     </section>
     <footer class="text-center py-4">
         {% if profile.bio %}
@@ -123,5 +127,5 @@
     {% if profile.user.username == user.username %}
 
     {% endif %}
-    <a class="btn btn-primary btn-block" href="{% url 'home' %}">Home</a>
+    {#    <a class="btn btn-primary btn-block" href="{% url 'home' %}">Home</a>#}
 {% endblock %}

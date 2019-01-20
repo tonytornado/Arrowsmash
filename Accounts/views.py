@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.views import generic
 
 from Accounts.forms import ProfileForm, UserForm, UpdateUserForm, UpdateProfileForm
-from Accounts.models import Profile
+from Accounts.models import Profile, Friend
 
 
 def home(request):
@@ -71,3 +71,9 @@ class ProfileListing(generic.ListView):
     model = Profile
     queryset = Profile.objects.all()
     template_name = 'profiles/view-all.html'
+
+
+def change_friends(request, operation, pk):
+    new_friend = Profile.objects.get(pk=pk)
+    Friend.make_friend(request.user, new_friend)
+    return redirect('view-profile')

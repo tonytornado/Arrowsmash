@@ -14,6 +14,13 @@ GENDER_CHOICES = (
     ["TF", "Trans-Female"]
 )
 
+REQUEST_STATUS = (
+    (0, "Pending"),
+    (1, "Accepted"),
+    (2, "Declined"),
+    (3, "Blocked"),
+)
+
 
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
@@ -50,3 +57,20 @@ class Profile(models.Model):
 
     def __str__(self):
         return "{} [{} {}]".format(self.user, self.user.first_name, self.user.last_name)
+
+
+class Friend(models.Model):
+    pitcher = models.ForeignKey(Profile, models.CASCADE, related_name="user_friend_id_1")
+    catcher = models.ForeignKey(Profile, models.CASCADE, related_name="user_friend_id_2")
+    status = models.CharField(choices=REQUEST_STATUS, max_length=1)
+    action_user = models.ForeignKey(Profile, models.CASCADE, related_name='action_user_id')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def friend_request(argument):
+        status = {
+            0: "Pending",
+            1: "Accepted",
+            2: "Declined",
+            3: "Blocked"
+        }
+        status.get(argument, "Invalid action")
