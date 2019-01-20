@@ -19,7 +19,7 @@ class UserForm(UserCreationForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        exclude = ('user', 'tagline', 'bio')
+        exclude = ('user', 'bio')
         labels = {
             'rival_code': 'E-AMUSE Rival Code [Not Required, but encouraged!]',
         }
@@ -27,6 +27,40 @@ class ProfileForm(forms.ModelForm):
             'rival_code': 'XXXX-XXXX format, please',
             'avatar': 'Show your face, if you would. Nothing lewd, please.',
         }
+        widgets = {
+            'DOB': forms.DateInput(attrs={'type': 'date'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = False
+        self.helper.layout = Layout(
+            Row(
+                Column('DOB', css_class='form-group col-md-6 mb-0', type='date'),
+                Column('gender', css_class='form-group col-md-6 mb-0'),
+                css_class='form-row'
+            ),
+            Row(
+                Column('rival_code', css_class='form-group col-md-6 mb-0'),
+                Column('tagline', css_class='form-group col-md-6 mb-0'),
+                css_class='form-row'
+            ),
+            Row(
+                Column('city', css_class='form-group col-md-6 mb-0'),
+                Column('state', css_class='form-group col-md-6 mb-0'),
+                css_class='form-row'
+            ),
+            Row(
+                Column(
+                    HTML(
+                        """{% if profile_form.avatar.value %}
+                        <img class="img-responsive img-thumbnail img-circle-avatar mr-auto" src={{ profile_form.avatar.value.url }}>
+                        {% endif %}""", ), css_class='col-sm-6'),
+                Column('avatar', css_class='col-sm-6 d-flex align-items-middle'),
+                css_class='col-sm-8 mx-auto py-4'
+            )
+        )
 
 
 class UpdateUserForm(forms.ModelForm):

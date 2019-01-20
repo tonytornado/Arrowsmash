@@ -6,14 +6,6 @@
     Update Profile!
 {% endblock %}
 {% block content %}
-    {#    {% if messages %}#}
-    {#        <ul class="messages">#}
-    {#            {% for message in messages %}#}
-    {#                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>#}
-    {#            {% endfor %}#}
-    {#        </ul>#}
-    {#    {% endif %}#}
-
     <h2>Update your profile here.</h2>
     <form method="post" action="{% url 'Accounts:update-profile' %}" enctype="multipart/form-data" novalidate>
         {% csrf_token %}
@@ -25,5 +17,4 @@
     </form>
     <hr/>
 
-    {#    <p><a href="{% url 'home' %}" class="btn btn-primary btn-sm">Go home</a></p>#}
 {% endblock %}

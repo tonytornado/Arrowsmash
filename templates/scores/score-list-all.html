@@ -3,7 +3,9 @@
     Score Listing
 {% endblock %}
 {% block content %}
-    <div class="row text-center">
+    <h2>Scores!</h2>
+    {% if score_list.count > 0 %}
+        <div class="row text-center">
         <div class="col-md-6">
             <h2>Latest Scores</h2>
             <table class="table table-striped">
@@ -55,5 +57,9 @@
                     </tbody>
                 </table>
             </div>
-        {% endif %}</div>
+        {% endif %}
+        </div>
+    {% else %}
+        <h4>No scores are loaded.</h4>
+    {% endif %}
 {% endblock %}
