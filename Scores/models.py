@@ -25,7 +25,7 @@ class Mix(models.Model):
 
     @staticmethod
     def song_count():
-        return Song.objects.count(Mix)
+        return Song.objects.count()
 
     def __str__(self):
         return "{} - {}".format(self.name, self.year)
@@ -48,9 +48,22 @@ class Score(models.Model):
     song = models.ForeignKey(Song, models.CASCADE)
     player = models.ForeignKey(Profile, models.CASCADE)
     score_rank = models.CharField(choices=SCORE_RANK, max_length=3)
-    ex = models.IntegerField()
+    max_combo = models.IntegerField()
+    marvelous = models.IntegerField()
+    perfect = models.IntegerField()
+    great = models.IntegerField()
+    good = models.IntegerField()
+    OK = models.IntegerField()
+    miss = models.IntegerField()
     proof = models.ImageField(upload_to=user_directory_path)
     date = models.DateTimeField(auto_now_add=True)
+
+    def ex(self):
+        return self.marvelous * 2 + self.perfect * 2 + self.great * 1 + self.OK * 6 - self.miss * 8
+
+    def full_score(self):
+        return (self.marvelous * 100) + ((self.perfect * 100) - 10) + ((self.great * 60) - 10) \
+               + (self.OK * 100) - self.miss * 100
 
     def get_absolute_url(self):
         return reverse('Scores:score-detail', kwargs={'pk': self.pk})

@@ -8,9 +8,10 @@
 
 {% block content %}
     <header class="text-center">
-        <h3 class="border">{{ profile.user.username }}</h3>
-        <p class="lead">{{ profile.age }} | {{ profile.get_gender_display }} | {{ profile.score_set.count }}
-            score{{ profile.score_set.count|pluralize }}</p>
+        <h2 class="border mb-0">{{ profile.user.username }}</h2>
+        <p class="text-right border bg-primary pt-0">{{ profile.age }} | {{ profile.get_gender_display }}
+            | {{ profile.score_set.count }}
+            score{{ profile.score_set.count|pluralize }} &nbsp;</p>
     </header>
     <section class="row mx-auto col-10">
         <div class="col-sm-6 d-flex align-items-center">
@@ -31,6 +32,9 @@
             </div>
         </div>
         <hr/>
+        {% if profile.user_friend_id_1 != profile.user_friend_id_2 %}
+
+        {% endif %}
     </section>
     <footer class="text-center py-4">
         {% if profile.bio %}
