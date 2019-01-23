@@ -1,15 +1,18 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Player Listing
+    Players
 {% endblock %}
 {% block content %}
     <h2>Current Players</h2>
-    <ul class="list-group">
-        {% for profile in profile_list %}
-            <li class="list-group-item"><a href="{% url 'view-profile' profile.pk %}"
-                                           class="btn btn-block">{{ profile.user.username }} - {{ profile.tagline }}</a>
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="col-md-8">
+        <ul class="list-group">
+            {% for profile in profile_list %}
+                <li class="list-group-item">
+                    <a href="{% url 'view-profile' profile.pk %}" class="btn btn-block"
+                       title="{{ profile.tagline }}">{{ profile.user.username }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

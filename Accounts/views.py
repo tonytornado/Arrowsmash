@@ -1,12 +1,13 @@
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.db import transaction
 from django.shortcuts import render, redirect
 from django.views import generic
 
 from Accounts.forms import ProfileForm, UserForm, UpdateUserForm, UpdateProfileForm
-from Accounts.models import Profile
+from Accounts.models import Profile, Friend
 
 
 def home(request):
@@ -15,6 +16,12 @@ def home(request):
 
 def logout_view(request):
     logout(request)
+
+
+def add_friend(request, pk):
+    friend = User.objects.get(pk=pk)
+    Friend.make_friend(request.user, friend, status="P")
+    return redirect('/')
 
 
 @transaction.atomic

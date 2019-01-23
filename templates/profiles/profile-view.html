@@ -14,7 +14,7 @@
     </header>
     <section class="row mx-auto col-10">
         <div class="col-sm-6 d-flex align-items-center">
-            <img src="{{ profile.avatar.url }}" alt="AVATAR" class="img-thumbnail img-responsive">
+            <img src="{{ profile.avatar.url }}" alt="AVATAR" class="img-thumbnail img-responsive img-circle-avatar">
         </div>
         <div class="col-sm-6">
             <div>
@@ -25,7 +25,7 @@
                     {% if profile.tagline %}
                         <li class="list-group-item bg-dark">"{{ profile.tagline }}"</li>{% endif %}
                     {% if profile.rival_code %}
-                        <li class="list-group-item bg-dark">{{ profile.rival_code }}</li>{% endif %}
+                        <li class="list-group-item bg-dark">Rival Code: {{ profile.rival_code }}</li>{% endif %}
                 </ul>
                 <br/>
             </div>
@@ -67,7 +67,6 @@
                 <hr/>
             </div>
         {% endif %}
-
 
         {% if profile.winner.count > 0 or profile.second_place.count > 0 or profile.third_place.count > 0 %}
             <div class="col-sm-6">
@@ -123,5 +122,5 @@
     {% if profile.user.username == user.username %}
 
     {% endif %}
-    <a class="btn btn-primary btn-block" href="{% url 'home' %}">Home</a>
+    {#    <a class="btn btn-primary btn-block" href="{% url 'home' %}">Home</a>#}
 {% endblock %}

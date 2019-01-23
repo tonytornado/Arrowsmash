@@ -14,6 +14,13 @@ GENDER_CHOICES = (
     ["TF", "Trans-Female"]
 )
 
+FRIENDSHIP_STATUS = (
+    ['P', 'PENDING'],
+    ['A', 'ACCEPTED'],
+    ['D', 'DENIED'],
+    ['B', 'BLOCKED']
+)
+
 
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
@@ -48,5 +55,37 @@ class Profile(models.Model):
     def save_user_profile(sender, instance, **kwargs):
         instance.profile.save()
 
+    @staticmethod
+    def get_friendships():
+        friendships = Friend.objects.all()
+        return friendships
+
     def __str__(self):
         return "{} [{} {}]".format(self.user, self.user.first_name, self.user.last_name)
+
+
+class Friend(models.Model):
+    user = models.ForeignKey(User, models.CASCADE, related_name="usersfriend")
+    friendo = models.ForeignKey(User, models.CASCADE, related_name="friendsfriend")
+    status = models.CharField(choices=FRIENDSHIP_STATUS, max_length=1)
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'Friends'
+
+    @classmethod
+    def make_friend(cls, pitcher, catcher, status):
+        friend, created = cls.objects.get_or_create(
+            creator=pitcher, new_friend=catcher, status=status)
+        friend.save()
+
+    @classmethod
+    def accept_friend(cls, pitcher, catcher, status):
+        friend, created = cls.objects.get_or_create(
+            creator=pitcher, new_friend=catcher, status=status)
+        friend.save()
+
+    @classmethod
+    def remove_friend(cls, pitcher, catcher):
+        friend = Friend.objects.filter(user__friendsfriend=catcher, status='A')
+        friend.delete()
