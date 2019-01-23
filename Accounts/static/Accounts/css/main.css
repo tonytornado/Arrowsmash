@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat|Russo+One');
+@import url("https://fonts.googleapis.com/css?family=Montserrat|Russo+One");
 
 #banner {
     max-height: 200px;
@@ -21,6 +21,6 @@ nav {
 
 .img-circle-avatar {
     border-radius: 50%;
-    height: 250px;
-    width: 250px;
+    height: 300px;
+    width: 300px;
 }
