@@ -79,8 +79,4 @@ class ProfileListing(generic.ListView):
     queryset = Profile.objects.all()
     template_name = 'profiles/view-all.html'
 
-
-def change_friends(request, operation, pk):
-    new_friend = Profile.objects.get(pk=pk)
-    Friend.make_friend(request.user, new_friend)
-    return redirect('view-profile')
+# TODO -  Make views for adding, removing, blocking friends and for friend requests.
