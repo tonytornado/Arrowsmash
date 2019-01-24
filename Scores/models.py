@@ -1,5 +1,4 @@
 from django.db import models
-# Create your models here.
 from django.urls import reverse
 
 from Accounts.models import Profile, user_directory_path
