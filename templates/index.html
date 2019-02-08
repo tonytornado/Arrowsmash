@@ -10,9 +10,10 @@
     <div class="jumbotron text-center text-dark">
         <h1 class="display-1">Project Arrowstomp</h1>
         {% if user.is_authenticated %}
-            Welcome back, {{ user.first_name }}!
-            <br/>
-            <small>Last login: {{ user.last_login }}</small>
+            {% if user.first_name %}
+                Welcome back, {{ user.first_name }}!
+                <br/>
+            {% endif %}
         {% endif %}
     </div>
     <section>
@@ -24,4 +25,7 @@
     <section>
         {% lorem 6 p random %}
     </section>
+{% endblock %}
+{% block footer %}
+    <small>Last login: {{ user.last_login }}</small>
 {% endblock %}

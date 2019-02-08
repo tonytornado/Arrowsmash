@@ -3,14 +3,15 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-    Update Profile!
+    Update Profile
 {% endblock %}
 {% block content %}
-    <h2>Update your profile here.</h2>
+    <h2 class="text-center">Basic Information</h2>
     <form method="post" action="{% url 'Accounts:update-profile' %}" enctype="multipart/form-data" novalidate>
         {% csrf_token %}
         {% crispy user_form %}
         <hr/>
+        <h2 class="text-center">Additional information</h2>
         {% crispy profile_form %}
         <hr/>
         <button type="submit" class="btn btn-primary btn-block">Edit</button>

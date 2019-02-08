@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
 
 {% load crispy_forms_tags %}
-{% block title %}
 
+{% block title %}
+    Score Submission
 {% endblock %}
 {% block content %}
     <form method="post" enctype="multipart/form-data" novalidate>
         {% csrf_token %}
-        {% crispy form %}
+        {% crispy form.as_p %}
         <input type="submit" class="btn btn-block btn-success">
     </form>
 {% endblock %}
