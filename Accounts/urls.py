@@ -23,7 +23,7 @@ from Accounts import views
 
 app_name = "Accounts"
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='single_akumu_shinjen'),
     path('update_profile', views.update_profile, name='update-profile'),
     path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'),
          name='login'),

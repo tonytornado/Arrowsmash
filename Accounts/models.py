@@ -1,9 +1,11 @@
 import datetime
 
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import timezone
 
 GENDER_CHOICES = (
     ["NB", "Non-Binary"],
@@ -57,35 +59,60 @@ class Profile(models.Model):
 
     @staticmethod
     def get_friendships():
-        friendships = Friend.objects.all()
-        return friendships
+        followers = Follow.objects.all()
+        return followers
 
     def __str__(self):
         return "{} [{} {}]".format(self.user, self.user.first_name, self.user.last_name)
 
 
-class Friend(models.Model):
-    user = models.ForeignKey(User, models.CASCADE, related_name="usersfriend")
-    friendo = models.ForeignKey(User, models.CASCADE, related_name="friendsfriend")
-    status = models.CharField(choices=FRIENDSHIP_STATUS, max_length=1)
-    created = models.DateTimeField(auto_now_add=True)
+class Follow(models.Model):
+    """ Model to represent Following relationships """
+    follower = models.ForeignKey(Profile, models.CASCADE, related_name='following')
+    followee = models.ForeignKey(Profile, models.CASCADE, related_name='followers')
+    created = models.DateTimeField(default=timezone.now)
 
-    class Meta:
-        db_table = 'Friends'
+    def __str__(self):
+        return "User #%s follows #%s" % (self.follower_id, self.followee_id)
 
-    @classmethod
-    def make_friend(cls, pitcher, catcher, status):
-        friend, created = cls.objects.get_or_create(
-            creator=pitcher, new_friend=catcher, status=status)
-        friend.save()
+    def save(self, *args, **kwargs):
+        # Ensure users can't be friends with themselves
+        if self.follower == self.followee:
+            raise ValidationError("Users cannot follow themselves.")
+        super(Follow, self).save(*args, **kwargs)
 
-    @classmethod
-    def accept_friend(cls, pitcher, catcher, status):
-        friend, created = cls.objects.get_or_create(
-            creator=pitcher, new_friend=catcher, status=status)
-        friend.save()
+    @staticmethod
+    def follow(follower, followee):
+        if follower == followee:
+            raise ValidationError("You can't follow yourself... seriously.")
 
-    @classmethod
-    def remove_friend(cls, pitcher, catcher):
-        friend = Friend.objects.filter(user__friendsfriend=catcher, status='A')
-        friend.delete()
+        relation, created = Follow.objects.get_or_create(follower=follower, followee=followee)
+
+        if created is False:
+            raise ValueError("You're already following them")
+
+        return relation
+
+    @staticmethod
+    def remove_follow(follower, followee):
+        if follower == followee:
+            raise ValidationError("You can't unfollow yourself... why?")
+
+        try:
+            rel = Follow.objects.get(follower=follower, followee=followee)
+            rel.delete()
+            return True
+        except Follow.DoesNotExist:
+            return False
+
+    @staticmethod
+    def following(user):
+        qs = Follow.objects.filter(follower=user).all()
+        following = [u.followee for u in qs]
+        return following
+
+    @staticmethod
+    def followers(user):
+        qs = Follow.objects.filter(followee=user).all()
+        followers = [u.follower for u in qs]
+        return followers

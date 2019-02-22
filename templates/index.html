@@ -27,5 +27,6 @@
     </section>
 {% endblock %}
 {% block footer %}
-    <small>Last login: {{ user.last_login }}</small>
+    {% if user.is_authenticated %}
+        <small>Last login: {{ user.last_login }}</small>{% endif %}
 {% endblock %}

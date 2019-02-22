@@ -27,14 +27,24 @@
                         <li class="list-group-item bg-dark">"{{ profile.tagline }}"</li>{% endif %}
                     {% if profile.rival_code %}
                         <li class="list-group-item bg-dark">Rival Code: {{ profile.rival_code }}</li>{% endif %}
+                    {% if profile.followers.count > 0 %}
+                        <li class="list-group-item bg-dark">
+                            {{ profile.followers.count }} follower{{ profile.followers.count|pluralize }}
+                        </li>
+                    {% endif %}
                 </ul>
                 <br/>
             </div>
+            {% if profile.user in profile.followers %}
+                <div>
+                    <form method="post" action="{% url 'follow' profile.pk %}">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-primary btn-block">Follow them</button>
+                    </form>
+                </div>
+            {% endif %}
         </div>
         <hr/>
-        {% if profile.user_friend_id_1 != profile.user_friend_id_2 %}
-
-        {% endif %}
     </section>
     <footer class="text-center py-4">
         {% if profile.bio %}

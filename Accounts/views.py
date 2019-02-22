@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.views import generic
 
 from Accounts.forms import ProfileForm, UserForm, UpdateUserForm, UpdateProfileForm
-from Accounts.models import Profile, Friend
+from Accounts.models import Profile, Follow
 
 
 def home(request):
@@ -79,4 +79,18 @@ class ProfileListing(generic.ListView):
     queryset = Profile.objects.all()
     template_name = 'profiles/view-all.html'
 
-# TODO -  Make views for adding, removing, blocking friends and for friend requests.
+
+# TODO -  Make views for adding, removing, blocking and for follows.
+@login_required
+def follower_add(request, pk):
+    if request.method == 'POST':
+        followee = Profile.objects.get(pk=pk)
+        follower = request.user.profile
+        try:
+            Follow.follow(follower, followee)
+        except Follow.DoesNotExist:
+            return False
+        else:
+            return redirect('view-profile', pk=pk)
+
+    return render(request, 'index.html')

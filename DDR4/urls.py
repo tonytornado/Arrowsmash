@@ -7,9 +7,10 @@ from Accounts import views
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('admin/', admin.site.urls, name='double_akumu_shinjen'),
+    path('admin/', admin.site.urls),
     path('profile/', views.ProfileListing.as_view(), name='profile-list'),
     path('profile/<int:pk>/', views.ProfileView.as_view(), name='view-profile'),
+    path('profile/follow/<int:pk>', views.follower_add, name='follow'),
     path('scores/', include('Scores.urls', namespace='Scores')),
     path('tournaments/', include('Tourney.urls', namespace='Tourney')),
     path('register/', views.register, name='register'),
