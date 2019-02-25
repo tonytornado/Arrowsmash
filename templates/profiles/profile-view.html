@@ -35,11 +35,18 @@
                 </ul>
                 <br/>
             </div>
-            {% if profile.user in profile.followers %}
+            {% if user.profile.get_follow_status not in profile.followers.all %}
                 <div>
                     <form method="post" action="{% url 'follow' profile.pk %}">
                         {% csrf_token %}
                         <button class="btn btn-outline-primary btn-block">Follow them</button>
+                    </form>
+                </div>
+            {% else %}
+                <div>
+                    <form method="post" action="{% url 'unfollow' profile.pk %}">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-danger btn-block">Unfollow them</button>
                     </form>
                 </div>
             {% endif %}
@@ -133,8 +140,6 @@
 
         <br/>
     </div>
-    {% if profile.user.username == user.username %}
 
-    {% endif %}
     {#    <a class="btn btn-primary btn-block" href="{% url 'home' %}">Home</a>#}
 {% endblock %}

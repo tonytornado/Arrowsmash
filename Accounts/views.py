@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.db import transaction
 from django.shortcuts import render, redirect
 from django.views import generic
@@ -11,17 +10,13 @@ from Accounts.models import Profile, Follow
 
 
 def home(request):
+    if request.user.is_authenticated is True:
+        return redirect("Scores:score-list")
     return render(request, "index.html")
 
 
 def logout_view(request):
     logout(request)
-
-
-def add_friend(request, pk):
-    friend = User.objects.get(pk=pk)
-    Friend.make_friend(request.user, friend, status="P")
-    return redirect('/')
 
 
 @transaction.atomic
@@ -88,6 +83,21 @@ def follower_add(request, pk):
         follower = request.user.profile
         try:
             Follow.follow(follower, followee)
+        except Follow.DoesNotExist:
+            return False
+        else:
+            return redirect('view-profile', pk=pk)
+
+    return render(request, 'index.html')
+
+
+@login_required
+def follower_delete(request, pk):
+    if request.method == 'POST':
+        followee = Profile.objects.get(pk=pk)
+        follower = request.user.profile
+        try:
+            Follow.remove_follow(follower, followee)
         except Follow.DoesNotExist:
             return False
         else:

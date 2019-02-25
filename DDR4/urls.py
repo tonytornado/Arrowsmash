@@ -11,10 +11,12 @@ urlpatterns = [
     path('profile/', views.ProfileListing.as_view(), name='profile-list'),
     path('profile/<int:pk>/', views.ProfileView.as_view(), name='view-profile'),
     path('profile/follow/<int:pk>', views.follower_add, name='follow'),
+    path('profile/unfollow/<int:pk>', views.follower_delete, name='unfollow'),
     path('scores/', include('Scores.urls', namespace='Scores')),
     path('tournaments/', include('Tourney.urls', namespace='Tourney')),
     path('register/', views.register, name='register'),
     path('accounts/', include('Accounts.urls', namespace='Accounts')),
+    # path('feed/', views.FeedSet.as_view(), name='live-feed'),
 ]
 
 if settings.DEBUG:

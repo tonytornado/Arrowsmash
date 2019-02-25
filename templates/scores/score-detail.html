@@ -1,16 +1,23 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Score Detail - {{ score.player.user }} {{ score.song }}
+    Score Detail for {{ score.player.user }} - {{ score.song }}
 {% endblock %}
 {% block content %}
-    <h2>Score Detail</h2>
-    <ul class="list-group bg-dark">
-        <li class="list-group-item bg-dark">Player: {{ score.player }}</li>
-        <li class="list-group-item bg-dark">Song: {{ score.song }}</li>
-        <li class="list-group-item bg-dark">EX: {{ score.ex }}</li>
-        <li class="list-group-item bg-dark">Rank: {{ score.score_rank }}</li>
-        <li class="list-group-item bg-dark"><img class="img-responsive img-thumbnail text-center"
-                                                 src="{{ score.proof.url }}"></li>
-    </ul>
+    <div class="p-auto rounded">
+        <h2>Score Detail</h2>
+        <div class="rounded bg-dark p-3 text-center">
+            {{ score.song.name }} - {{ score.song.difficulty }}
+        </div>
+        <div class="bg-dark rounded p-3 text-center d-flex w-100 justify-content-around">
+            <div>Player: {{ score.player }}</div>
+            <div>EX: {{ score.ex }}</div>
+            <div>Rank: {{ score.score_rank }}</div>
+        </div>
+
+        <ul class="list-group bg-dark">
+            <li class="list-group-item bg-dark"><img src="{{ score.proof.url }}" class="img-responsive img-thumbnail
+        text-center" alt="Score proof.">
+        </ul>
+    </div>
 {% endblock %}

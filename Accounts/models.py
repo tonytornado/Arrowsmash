@@ -57,10 +57,9 @@ class Profile(models.Model):
     def save_user_profile(sender, instance, **kwargs):
         instance.profile.save()
 
-    @staticmethod
-    def get_friendships():
-        followers = Follow.objects.all()
-        return followers
+    @property
+    def get_follow_status(request):
+        return Follow.objects.get(follower=request.user.pk)
 
     def __str__(self):
         return "{} [{} {}]".format(self.user, self.user.first_name, self.user.last_name)
@@ -73,7 +72,7 @@ class Follow(models.Model):
     created = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return "User #%s follows #%s" % (self.follower_id, self.followee_id)
+        return "Player #%s follows #%s" % (self.follower.user.username, self.followee.user.username)
 
     def save(self, *args, **kwargs):
         # Ensure users can't be friends with themselves
@@ -86,7 +85,8 @@ class Follow(models.Model):
         if follower == followee:
             raise ValidationError("You can't follow yourself... seriously.")
 
-        relation, created = Follow.objects.get_or_create(follower=follower, followee=followee)
+        relation, created = Follow.objects \
+            .get_or_create(follower=follower, followee=followee)
 
         if created is False:
             raise ValueError("You're already following them")
@@ -99,20 +99,21 @@ class Follow(models.Model):
             raise ValidationError("You can't unfollow yourself... why?")
 
         try:
-            rel = Follow.objects.get(follower=follower, followee=followee)
+            rel = Follow.objects \
+                .get(follower=follower, followee=followee)
             rel.delete()
             return True
         except Follow.DoesNotExist:
             return False
 
     @staticmethod
-    def following(user):
-        qs = Follow.objects.filter(follower=user).all()
+    def following_set(pro):
+        qs = Follow.objects.filter(follower=pro).all()
         following = [u.followee for u in qs]
         return following
 
     @staticmethod
-    def followers(user):
-        qs = Follow.objects.filter(followee=user).all()
+    def followers_set(pro):
+        qs = Follow.objects.filter(followee=pro).all()
         followers = [u.follower for u in qs]
         return followers
