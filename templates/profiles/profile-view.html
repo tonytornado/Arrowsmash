@@ -14,10 +14,10 @@
             score{{ profile.score_set.count|pluralize }} &nbsp;</p>
     </header>
     <section class="row mx-auto col-10">
-        <div class="col-sm-6 d-flex align-items-center">
+        <div class="col-sm-6 d-flex align-items-center" id="avatar_container">
             <img src="{{ profile.avatar.url }}" alt="AVATAR" class="img-thumbnail img-responsive img-circle-avatar">
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-6" id="information_container">
             <div>
                 <ul class="list-group">
                     {% if profile.user.get_full_name %}
@@ -35,15 +35,15 @@
                 </ul>
                 <br/>
             </div>
-            {% if profile not in profile.quix %}
+            {% if user.profile == profile %}
+                {# Blank space #}
+            {% elif profile.stalked.get not in user.profile.stalker.all %}
                 <div>
                     <form method="post" action="{% url 'follow' profile.pk %}">
                         {% csrf_token %}
                         <button class="btn btn-outline-primary btn-block">Follow them</button>
                     </form>
                 </div>
-            {% elif user.profile == profile %}
-
             {% else %}
                 <div>
                     <form method="post" action="{% url 'unfollow' profile.pk %}">
@@ -67,7 +67,7 @@
     </footer>
     <div class="text-center row">
         {% if profile.score_set.count > 0 %}
-            <div class="col-sm-6">
+            <div class="col-sm-6" id="latest_score">
                 <h3 class="border">Latest Scores</h3>
                 <table class="table table-borderless">
                     <thead class="thead-light">
@@ -95,31 +95,32 @@
         {% endif %}
         {% if profile.user.tournament.tournamententry_set %}
 
-            <div class="text-center col-sm-6">{% if profile.user.tournament.tournamententry_set.count > 0 %}
-                <h3 class="border">Tournaments Entered</h3>
-                <table class="table table-borderless">
-                    <thead class="thead-light">
-                    <tr>
-                        <th colspan="2">Tournaments</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for entry in profile.user.tournament.tournamententry_set.all %}
+            <div class="text-center col-sm-6" id="tournaments_entered">
+                {% if profile.user.tournament.tournamententry_set.count > 0 %}
+                    <h3 class="border">Tournaments Entered</h3>
+                    <table class="table table-borderless">
+                        <thead class="thead-light">
                         <tr>
-                            <td>{{ entry.tourney.name }}</td>
-                            <td>{{ entry.tourney.date }}</td>
+                            <th colspan="2">Tournaments</th>
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        {% for entry in profile.user.tournament.tournamententry_set.all %}
+                            <tr>
+                                <td>{{ entry.tourney.name }}</td>
+                                <td>{{ entry.tourney.date }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
 
-            {% endif %}</div>
+                {% endif %}</div>
 
         {% endif %}
 
         {% if profile.winner.count > 0 or profile.second_place.count > 0 or profile.third_place.count > 0 %}
-            <div class="col-sm-6">
-                <h3 class="border">Tournament Results</h3>
+            <div class="col-sm-6" id="tournament_placement">
+                <h3 class="border">Tournaments Placed</h3>
                 <table class="table table-borderless">
                     <thead class="thead-light">
                     <tr>
