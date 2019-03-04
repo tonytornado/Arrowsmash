@@ -7,7 +7,7 @@ from Scores.models import Score
 
 class ScoreListing(generic.ListView):
     model = Score
-    queryset = Score.objects.all()
+    queryset = Score.objects.order_by('date').all()
     template_name = "scores/score-list-all.html"
 
 

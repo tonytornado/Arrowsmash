@@ -30,9 +30,7 @@ def user_directory_path(instance, filename):
 
 
 class Profile(models.Model):
-    """
-    Main profile class that needs all the work.
-    """
+    """    Main profile class that needs all the work.    """
     user = models.OneToOneField(User, models.CASCADE)
     avatar = models.ImageField(upload_to=user_directory_path, default='default.jpg')
     rival_code = models.CharField(max_length=9, blank=True)
@@ -43,43 +41,41 @@ class Profile(models.Model):
     state = models.CharField(max_length=2, blank=True)
     bio = models.TextField(max_length=5000, blank=True)
 
+    # blog = models.OneToOneField(Blog, models.CASCADE)
+
     @property
     def age(self):
+        """Returns the age of a user"""
         return datetime.date.today().year - self.DOB.year
+
+    @property
+    def full_name(self):
+        """Returns a full name"""
+        return "{} {}".format(self.user.first_name, self.user.last_name)
 
     @receiver(post_save, sender=User)
     def update_user_profile(sender, instance, created, **kwargs):
+        """Updates the profile for someone"""
         if created:
             Profile.objects.create(user=instance)
         instance.profile.save()
 
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
+        """Saves the profile for someone"""
         instance.profile.save()
 
     @property
-    def get_follow_status(request):
-        return Follow.objects.get(follower=request.user.pk)
+    def quix(request):
+        qs = Follow.objects.filter(followee=request.user.profile).all()
+        following = [u.follower_id for u in qs]
+        return following
 
     def __str__(self):
         return "{} [{} {}]".format(self.user, self.user.first_name, self.user.last_name)
 
 
-class Follow(models.Model):
-    """ Model to represent Following relationships """
-    follower = models.ForeignKey(Profile, models.CASCADE, related_name='following')
-    followee = models.ForeignKey(Profile, models.CASCADE, related_name='followers')
-    created = models.DateTimeField(default=timezone.now)
-
-    def __str__(self):
-        return "Player #%s follows #%s" % (self.follower.user.username, self.followee.user.username)
-
-    def save(self, *args, **kwargs):
-        # Ensure users can't be friends with themselves
-        if self.follower == self.followee:
-            raise ValidationError("Users cannot follow themselves.")
-        super(Follow, self).save(*args, **kwargs)
-
+class FollowManager(models.Manager):
     @staticmethod
     def follow(follower, followee):
         if follower == followee:
@@ -117,3 +113,21 @@ class Follow(models.Model):
         qs = Follow.objects.filter(followee=pro).all()
         followers = [u.follower for u in qs]
         return followers
+
+
+class Follow(models.Model):
+    """ Model to represent Following relationships """
+    follower = models.ForeignKey(Profile, models.CASCADE, related_name='stalker')
+    followee = models.ForeignKey(Profile, models.CASCADE, related_name='stalked')
+    created = models.DateTimeField(default=timezone.now)
+
+    objects = FollowManager()
+
+    def __str__(self):
+        return "Player #%s follows #%s" % (self.follower.user.pk, self.followee.user.pk)
+
+    def save(self, *args, **kwargs):
+        # Ensure users can't be friends with themselves
+        if self.follower == self.followee:
+            raise ValidationError("Users cannot follow themselves.")
+        super(Follow, self).save(*args, **kwargs)

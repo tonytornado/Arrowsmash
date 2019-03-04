@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.views import generic
 
 from Accounts.forms import ProfileForm, UserForm, UpdateUserForm, UpdateProfileForm
-from Accounts.models import Profile, Follow
+from Accounts.models import Profile, Follow, FollowManager
 
 
 def home(request):
@@ -75,14 +75,13 @@ class ProfileListing(generic.ListView):
     template_name = 'profiles/view-all.html'
 
 
-# TODO -  Make views for adding, removing, blocking and for follows.
 @login_required
 def follower_add(request, pk):
     if request.method == 'POST':
         followee = Profile.objects.get(pk=pk)
         follower = request.user.profile
         try:
-            Follow.follow(follower, followee)
+            FollowManager.follow(follower, followee)
         except Follow.DoesNotExist:
             return False
         else:
@@ -97,7 +96,7 @@ def follower_delete(request, pk):
         followee = Profile.objects.get(pk=pk)
         follower = request.user.profile
         try:
-            Follow.remove_follow(follower, followee)
+            FollowManager.remove_follow(follower, followee)
         except Follow.DoesNotExist:
             return False
         else:

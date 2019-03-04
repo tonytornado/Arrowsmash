@@ -19,6 +19,14 @@
                 {% endfor %}
             </li>
         {% endif %}
-        <li class="list-group-item bg-dark"></li>
+        <li class="list-group-item bg-dark">
+            <form method="post" action="{% url 'Tourney:tournament-entry' tournament.pk %}">
+                {% csrf_token %}
+                <h4>Enter this tournament?</h4>
+                <div class="btn btn-group">
+                    <button class="btn btn-block btn-primary">Join Tournament</button>
+                </div>
+            </form>
+        </li>
     </ul>
 {% endblock %}
