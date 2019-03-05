@@ -46,7 +46,10 @@ class Profile(models.Model):
     @property
     def age(self):
         """Returns the age of a user"""
-        return datetime.date.today().year - self.DOB.year
+        if self.DOB:
+            return datetime.date.today().year - self.DOB.year
+        else:
+            return "N/A"
 
     @property
     def full_name(self):

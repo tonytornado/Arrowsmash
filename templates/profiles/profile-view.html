@@ -24,8 +24,9 @@
                         <li class="list-group-item bg-dark d-flex justify-content-between align-items-center">
                             Name: {{ profile.user.get_full_name }}
                         </li>{% endif %}
-                    <li class="list-group-item bg-dark d-flex justify-content-between
-                        align-items-center">Location: {{ profile.city }}, {{ profile.state }}</li>
+                    {% if profile.city or profile.state %}
+                        <li class="list-group-item bg-dark d-flex justify-content-between
+                        align-items-center">Location: {{ profile.city }}, {{ profile.state }}</li>{% endif %}
                     {% if profile.tagline %}
                         <li class="list-group-item bg-dark d-flex justify-content-between align-items-center">
                             "{{ profile.tagline }}"

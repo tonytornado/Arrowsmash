@@ -35,18 +35,9 @@ class Tournament(models.Model):
     location = models.TextField(max_length=5000, help_text="Street, City, State, Zip Code, Country, Planet.")
     rules = models.TextField(max_length=10000, help_text="Detail all of the rules of your tournament here.")
     competition_date = models.DateField(default=timezone.now)
-    approval_status: models.BooleanField(default=False)
-
-    def verified(self):
-        """returns a verified status"""
-        if self.approval_status:
-            return "Verified"
-        else:
-            return "pending"
-
 
     def __str__(self):
-        return "{}, {} [{}]".format(self.name, self.location, self.verified)
+        return "{}, {}".format(self.name, self.location)
 
 
 class TournamentResult(models.Model):
