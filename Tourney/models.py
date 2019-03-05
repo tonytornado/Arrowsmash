@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils import timezone
 
 from Accounts.models import Profile
 from Scores.models import Mix
@@ -45,7 +46,7 @@ class Tournament(models.Model):
     location = models.TextField(max_length=5000, help_text="Street, City, State, Zip Code, Country, Planet.")
     rules = models.TextField(max_length=10000, help_text="Detail all of the rules of your tournament here.")
     prize_Pool = models.ForeignKey(Prize, models.CASCADE)
-    date = models.DateField()
+    comp_date = models.DateTimeField(default=timezone.now)
     approval_status: models.BooleanField(default=False)
 
     def verified(self):
@@ -54,6 +55,10 @@ class Tournament(models.Model):
             return "Verified"
         else:
             return "pending"
+
+    # @property
+    # def deadline(self):
+    #   return timezone.now < self.comp_date
 
     def __str__(self):
         return "{}, {} [{}]".format(self.name, self.location, self.verified)

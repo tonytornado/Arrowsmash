@@ -4,20 +4,56 @@
     Score Detail for {{ score.player.user }} - {{ score.song }}
 {% endblock %}
 {% block content %}
-    <div class="p-auto rounded">
-        <h2>Score Detail</h2>
-        <div class="rounded bg-dark p-3 text-center">
-            {{ score.song.name }} - {{ score.song.difficulty }}
+    <h3 class="text-center">{{ score.song.name }} - {{ score.song.get_difficulty_display }}</h3>
+    <div class="row mx-auto">
+        <div class="col-sm-6 rounded p-2">
+            <div class="bg-dark p-3 text-center d-flex w-100 justify-content-around">
+                <div>Player: {{ score.player }}</div>
+                <div>Rank: {{ score.score_rank }}</div>
+            </div>
+            <div><img src="{{ score.proof.url }}" class="img-thumbnail
+        text-center" alt="Score proof."></div>
         </div>
-        <div class="bg-dark rounded p-3 text-center d-flex w-100 justify-content-around">
-            <div>Player: {{ score.player }}</div>
-            <div>EX: {{ score.ex }}</div>
-            <div>Rank: {{ score.score_rank }}</div>
+        <div class="col-sm-6 rounded p-2">
+            <table class="table table-bordered text-center">
+                <thead class="thead-light">
+                <tr>
+                    <th colspan="2">
+                        Score Details
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><b>EX SCORE</b></td>
+                    <td>{{ score.ex }}</td>
+                </tr>
+                <tr>
+                    <td>Marvelous</td>
+                    <td>{{ score.marvelous }}</td>
+                </tr>
+                <tr>
+                    <td>Perfect</td>
+                    <td>{{ score.perfect }}</td>
+                </tr>
+                <tr>
+                    <td>Great</td>
+                    <td>{{ score.great }}</td>
+                </tr>
+                <tr>
+                    <td>Good</td>
+                    <td>{{ score.good }}</td>
+                </tr>
+                <tr>
+                    <td>OK</td>
+                    <td>{{ score.OK }}</td>
+                </tr>
+                <tr>
+                    <td>Miss</td>
+                    <td>{{ score.miss }}</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-
-        <ul class="list-group bg-dark">
-            <li class="list-group-item bg-dark"><img src="{{ score.proof.url }}" class="img-responsive img-thumbnail
-        text-center" alt="Score proof.">
-        </ul>
     </div>
 {% endblock %}

@@ -52,12 +52,7 @@ class ProfileForm(forms.ModelForm):
                 css_class='form-row'
             ),
             Row(
-                Column(
-                    HTML(
-                        """{% if profile_form.avatar.value %}
-                        <img class="img-responsive img-thumbnail img-circle-avatar mr-auto" src={{ profile_form.avatar.value.url }}>
-                        {% endif %}""", ), css_class='col-sm-6'),
-                Column('avatar', css_class='col-sm-6 d-flex align-items-middle'),
+                Column('avatar', css_class='col-sm-6 mx-auto d-flex align-items-middle'),
                 css_class='col-sm-8 mx-auto py-4'
             )
         )

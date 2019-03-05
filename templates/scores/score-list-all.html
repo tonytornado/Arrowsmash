@@ -6,88 +6,89 @@
     <h2>Scores!</h2>
     {% if score_list.count > 0 %}
         <div class="row text-center">
-        <div class="col-md-6">
-            <h2>Latest Scores</h2>
-            <table class="table table-striped" id="latest_scores">
-                <thead class="thead-light">
-                <tr>
-                    <th scope="col">Player</th>
-                    <th scope="col">Song</th>
-                    <th scope="col">Score</th>
-                    <th scope="col"></th>
-                </tr>
-                </thead>
-                <tbody class="">
-                {% for score in score_list|slice:":10" %}
-                    <tr class="">
-                        <td>{{ score.player.user.username }}</td>
-                        <td>{{ score.song }}</td>
-                        <td>{{ score.ex }}</td>
-                        <td><a href="{% url 'Scores:score-detail' score.pk %}"
-                               class="btn btn-primary btn-block">Check</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-
-            {#        <div class="col-md-6">#}
-            {#            <h2>Top 10 follow Scores</h2>#}
-            {#            <table class="table table-striped" id="top_ten_scores">#}
-            {#                <thead class="thead-light">#}
-            {#                <tr>#}
-            {#                    <th scope="col">Player</th>#}
-            {#                    <th scope="col">Song</th>#}
-            {#                    <th scope="col">Score</th>#}
-            {#                    <th scope="col"></th>#}
-            {#                </tr>#}
-            {#                </thead>#}
-            {#                <tbody class="">#}
-            {#                {% for score in score_list|slice:":10" %}#}
-            {##}
-            {#                    {% if score %}#}
-            {#                        <tr class="">#}
-            {#                        <td>{{ score.player.user.username }}</td>#}
-            {#                        <td>{{ score.song }}</td>#}
-            {#                        <td>{{ score.ex }}</td>#}
-            {#                        <td><a href="{% url 'Scores:score-detail' score.pk %}"#}
-            {#                               class="btn btn-primary btn-block">Check</a>#}
-            {#                        </td>#}
-            {#                    </tr>#}
-            {#                    {% endif %}#}
-            {##}
-            {#                {% endfor %}#}
-            {#                </tbody>#}
-            {#            </table>#}
-            {#        </div>#}
-
-        {% if user.is_authenticated %}
-            <div class="col-md-6"><h2>Your scores</h2>
-                <table class="table table-striped" id="user_scores">
+            <div class="col-md mx-auto">
+                <h2>Latest Scores</h2>
+                <table class="table table-striped" id="latest_scores">
                     <thead class="thead-light">
                     <tr>
+                        <th scope="col">Player</th>
                         <th scope="col">Song</th>
                         <th scope="col">Score</th>
                         <th scope="col"></th>
                     </tr>
                     </thead>
                     <tbody class="">
-                    {% for score in score_list %}
-                        {% if score.player.user == user %}
-                            <tr class="">
-                                <td>{{ score.song }}</td>
-                                <td>{{ score.ex }}</td>
-                                <td><a href="{% url 'Scores:score-detail' score.pk %}"
-                                       class="btn btn-primary btn-block">Check</a>
-                                </td>
-                            </tr>
-                        {% endif %}
+                    {% for score in score_list|slice:":10" %}
+                        <tr class="">
+                            <td>{{ score.player.user.username }}</td>
+                            <td>{{ score.song }}</td>
+                            <td>{{ score.ex }}</td>
+                            <td><a href="{% url 'Scores:score-detail' score.pk %}"
+                                   class="btn btn-primary btn-block">Check</a>
+                            </td>
+                        </tr>
                     {% endfor %}
                     </tbody>
                 </table>
             </div>
-        {% endif %}
+
+            {#            {% if user.is_authenticated %}#}
+            {#                <div class="col-md-6">#}
+            {#                    <h2>Top 10 follow Scores</h2>#}
+            {#                    <table class="table table-striped" id="top_ten_scores">#}
+            {#                        <thead class="thead-light">#}
+            {#                        <tr>#}
+            {#                            <th scope="col">Player</th>#}
+            {#                            <th scope="col">Song</th>#}
+            {#                            <th scope="col">Score</th>#}
+            {#                            <th scope="col"></th>#}
+            {#                        </tr>#}
+            {#                        </thead>#}
+            {#                        <tbody class="">#}
+            {#                        {% for score in score_list|slice:":10" %}#}
+            {#                            {% if score.player.user == user.player.stalked %}#}
+            {#                                <tr class="">#}
+            {#                                    <td>{{ score.player.user.username }}</td>#}
+            {#                                    <td>{{ score.song }}</td>#}
+            {#                                    <td>{{ score.ex }}</td>#}
+            {#                                    <td><a href="{% url 'Scores:score-detail' score.pk %}"#}
+            {#                                           class="btn btn-primary btn-block">Check</a>#}
+            {#                                    </td>#}
+            {#                                </tr>#}
+            {#                            {% endif %}#}
+            {##}
+            {#                        {% endfor %}#}
+            {#                        </tbody>#}
+            {#                    </table>#}
+            {#                </div>#}
+            {#            {% endif %}#}
+
+            {% if user.is_authenticated %}
+                <div class="col-md-6 mx-auto"><h2>Your scores</h2>
+                    <table class="table table-striped" id="user_scores">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Song</th>
+                            <th scope="col">Score</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody class="">
+                        {% for score in score_list %}
+                            {% if score.player.user == user %}
+                                <tr class="">
+                                    <td>{{ score.song }}</td>
+                                    <td>{{ score.ex }}</td>
+                                    <td><a href="{% url 'Scores:score-detail' score.pk %}"
+                                           class="btn btn-primary btn-block">Check</a>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
         </div>
     {% else %}
         <h4>No scores are loaded.</h4>

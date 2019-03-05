@@ -6,9 +6,9 @@
 {% block content %}
     <h2>Tournament Detail</h2>
     <ul class="list-group bg-dark rounded">
-        <li class="list-group-item bg-dark">Name: {{ tournament.name }}</li>
+        <li class="list-group-item bg-dark"><b>{{ tournament.name }}</b></li>
         <li class="list-group-item bg-dark">Location: {{ tournament.location }}</li>
-        <li class="list-group-item bg-dark">Date: {{ tournament.Date }}</li>
+        <li class="list-group-item bg-dark">Date: {{ tournament.date }}</li>
         <li class="list-group-item bg-dark">Rules: {{ tournament.rules }}</li>
         <li class="list-group-item bg-dark">
             Organizer: {{ tournament.organizer.first_name }} {{ tournament.organizer.last_name }}</li>
@@ -19,6 +19,7 @@
                 {% endfor %}
             </li>
         {% endif %}
+        {% if user.is_authenticated and tournament.organizer != user and user not in tournament.tournamententry_set.all %}
         <li class="list-group-item bg-dark">
             <form method="post" action="{% url 'Tourney:tournament-entry' tournament.pk %}">
                 {% csrf_token %}
@@ -28,5 +29,6 @@
                 </div>
             </form>
         </li>
+        {% endif %}
     </ul>
 {% endblock %}
