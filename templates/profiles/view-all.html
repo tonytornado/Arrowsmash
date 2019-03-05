@@ -9,7 +9,7 @@
         <ul class="list-group">
             {% for profile in profile_list %}
                 <li class="list-group-item">
-                    <a href="{% url 'view-profile' profile.pk %}" class="btn btn-block"
+                    <a href="{% url 'Accounts:view-profile' profile.pk %}" class="btn btn-block"
                        title="{{ profile.tagline }}">{{ profile.user.username }}</a>
                 </li>
             {% endfor %}

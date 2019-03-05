@@ -47,14 +47,14 @@
                     {# Blank space #}
                 {% elif profile.stalked.get not in user.profile.stalker.all %}
                     <div>
-                        <form method="post" action="{% url 'follow' profile.pk %}">
+                        <form method="post" action="{% url 'Accounts:follow' profile.pk %}">
                             {% csrf_token %}
                             <button class="btn btn-outline-primary btn-block">Follow them</button>
                         </form>
                     </div>
                 {% else %}
                     <div>
-                        <form method="post" action="{% url 'unfollow' profile.pk %}">
+                        <form method="post" action="{% url 'Accounts:unfollow' profile.pk %}">
                             {% csrf_token %}
                             <button class="btn btn-outline-danger btn-block">Unfollow them</button>
                         </form>

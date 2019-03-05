@@ -9,12 +9,6 @@ from Accounts.forms import ProfileForm, UserForm, UpdateUserForm, UpdateProfileF
 from Accounts.models import Profile, Follow, FollowManager
 
 
-def home(request):
-    if request.user.is_authenticated is True:
-        return redirect("Scores:score-list")
-    return render(request, "index.html")
-
-
 def logout_view(request):
     logout(request)
 

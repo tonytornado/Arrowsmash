@@ -17,7 +17,12 @@ class TournamentManager(models.Manager):
 
     @staticmethod
     def enter_tournament(event, entry, div=None):
-        """Enters someone into a tournament"""
+        """Enters someone into a tournament
+        :param event: The tournament in question
+        :param entry: The user entered into it
+        :param div: The division as an int?
+        :return:
+        """
         if div is None:
             div = 2
         rel = TournamentEntry.tourneys.get_or_create(tourney=event, entrants=entry, division=div)
