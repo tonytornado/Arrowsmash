@@ -13,7 +13,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
     path('s/', include('Scores.urls', namespace='Scores')),
     path('t/', include('Tourney.urls', namespace='Tourney')),
-    path('p/', include('Accounts.urls', namespace='Accounts')),
+    path('i/', include('Accounts.urls', namespace='Accounts')),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
     path('contribute/', views.contribute, name='about')
