@@ -12,17 +12,6 @@ DIVISION_CHOICES = [
 ]
 
 
-class Prize(models.Model):
-    title = models.CharField(max_length=50)
-    place1 = models.IntegerField()
-    place2 = models.IntegerField()
-    place3 = models.IntegerField()
-    place4 = models.IntegerField()
-
-    def __str__(self):
-        return self.title
-
-
 class TournamentManager(models.Manager):
     """A tournament manager"""
 
@@ -45,8 +34,7 @@ class Tournament(models.Model):
     mix = models.OneToOneField(Mix, on_delete=models.CASCADE)
     location = models.TextField(max_length=5000, help_text="Street, City, State, Zip Code, Country, Planet.")
     rules = models.TextField(max_length=10000, help_text="Detail all of the rules of your tournament here.")
-    prize_Pool = models.ForeignKey(Prize, models.CASCADE)
-    comp_date = models.DateTimeField(default=timezone.now)
+    competition_date = models.DateField(default=timezone.now)
     approval_status: models.BooleanField(default=False)
 
     def verified(self):
@@ -56,9 +44,6 @@ class Tournament(models.Model):
         else:
             return "pending"
 
-    # @property
-    # def deadline(self):
-    #   return timezone.now < self.comp_date
 
     def __str__(self):
         return "{}, {} [{}]".format(self.name, self.location, self.verified)
