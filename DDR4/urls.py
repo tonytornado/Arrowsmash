@@ -16,7 +16,7 @@ urlpatterns = [
     path('i/', include('Accounts.urls', namespace='Accounts')),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
-    path('contribute/', views.contribute, name='about')
+    path('contribute/', views.contribute, name='contribute')
     # path('feed/', views.FeedSet.as_view(), name='live-feed'),
 ]
 
