@@ -15,7 +15,6 @@ urlpatterns = [
         path('<int:pk>/', views.ProfileView.as_view(), name='view-profile'),
         path('follow/<int:pk>', views.follower_add, name='follow'),
         path('unfollow/<int:pk>', views.follower_delete, name='unfollow'),
-        # path('accounts/', include('django.contrib.auth.urls')),
     ])),
 ]
     # + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

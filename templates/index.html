@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
-{% block title %}This is a thing here
+{% block title %}
+    Arrowsmash
 {% endblock %}
 
 {% block header %}
@@ -8,7 +9,7 @@
 {% endblock %}
 {% block content %}
     <div class="jumbotron text-center text-dark">
-        <h1 class="display-1">Project Arrowstomp</h1>
+        <h1 class="display-1">Project Arrowsmash</h1>
         {% if user.is_authenticated %}
             {% if user.first_name %}
                 Welcome back, {{ user.first_name }}!

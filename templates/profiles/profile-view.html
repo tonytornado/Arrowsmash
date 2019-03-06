@@ -13,11 +13,12 @@
             | {{ profile.score_set.count }}
             score{{ profile.score_set.count|pluralize }} &nbsp;</p>
     </header>
-    <section class="row mx-auto col-10">
-        <div class="col-sm-6 d-flex align-items-center" id="avatar_container">
-            <img src="{{ profile.avatar.url }}" alt="AVATAR" class="img-thumbnail img-responsive img-circle-avatar">
+    <section class="row mx-auto">
+        <div class="col-sm-4 d-flex align-items-center" id="avatar_container">
+            <img src="{{ profile.avatar.url }}" alt="AVATAR" class="img-thumbnail img-circle-avatar" height="100"
+                 width="100">
         </div>
-        <div class="col-sm-6" id="information_container">
+        <div class="col-sm-8" id="information_container">
             <div>
                 <ul class="list-group">
                     {% if profile.user.get_full_name %}
