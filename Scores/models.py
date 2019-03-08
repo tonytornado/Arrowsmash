@@ -11,16 +11,6 @@ DIFFICULTY_RATING = (
     ('C', 'CHALLENGE'),
 )
 
-SCORE_RANK = [
-    ('AAA', 'AAA'),
-    ('AA', 'AA'),
-    ('A', 'A'),
-    ('B', 'B'),
-    ('C', 'C'),
-    ('D', 'D'),
-    ('E', 'E'),
-]
-
 
 class Mix(models.Model):
     name = models.CharField(max_length=150)
@@ -50,8 +40,6 @@ class Song(models.Model):
 class Score(models.Model):
     song = models.ForeignKey(Song, models.CASCADE)
     player = models.ForeignKey(Profile, models.CASCADE)
-    score_rank = models.CharField(choices=SCORE_RANK, max_length=3)
-    max_combo = models.IntegerField()
     marvelous = models.IntegerField()
     perfect = models.IntegerField()
     great = models.IntegerField()
@@ -61,12 +49,91 @@ class Score(models.Model):
     proof = models.ImageField(upload_to=user_directory_path)
     date = models.DateTimeField(auto_now_add=True)
 
+    @property
     def ex(self):
-        return self.marvelous * 2 + self.perfect * 2 + self.great * 1 + self.OK * 6 - self.miss * 8
+        """
+        Returns the EX score for the song.
+        :return:
+        """
+        score = (self.marvelous * 3) + (self.perfect * 2) + (self.great * 1) + (self.OK * 3)
+        return score
 
+    @property
     def full_score(self):
-        return (self.marvelous * 100) + ((self.perfect * 100) - 10) + ((self.great * 60) - 10) \
-               + (self.OK * 100) - self.miss * 100
+        """
+        Returns the full number score of the song
+        :return:
+        """
+        num_steps = self.marvelous + self.perfect + self.great + self.good + self.miss
+        marv_score = 1000000 / (Song.steps + self.OK)
+        perf_score = marv_score - 10
+        great_score = (marv_score * 0.6) - 10
+        good_score = (marv_score * 0.2) - 10
+        reg_score = ((marv_score * (self.marvelous + self.OK) + (perf_score * self.perfect) + (
+                great_score * self.great) + (
+                              good_score * self.good) + 0.1) / 10) * 10
+        if num_steps != 0:
+            return reg_score
+
+    @property
+    def full_combo(self):
+        """
+        Shows the special text for full combos.
+        :return:
+        """
+        if self.miss == 0:
+            if self.good == 0:
+                if self.great == 0:
+                    if self.perfect == 0:
+                        if self.marvelous == 0:
+                            pass
+                        else:
+                            return "You are Supreme!"
+                    else:
+                        return "Yellow [Perfect Full Combo]"
+                else:
+                    return "Green [Great Full Combo]"
+            else:
+                return "Blue [Good Full Combo"
+        else:
+            return False
+
+    @property
+    def letter_grade(self):
+        """
+        Returns a letter grade for the song
+        :return:
+        """
+        if self.full_score >= 990000:
+            return "AAA"
+        if 950000 <= self.full_score <= 989990:
+            return "AA+"
+        if 900000 <= self.full_score <= 949990:
+            return "AA"
+        if 890000 <= self.full_score <= 899990:
+            return "AA-"
+        if 850000 <= self.full_score <= 889990:
+            return "A+"
+        if 800000 <= self.full_score <= 849990:
+            return "A"
+        if 790000 <= self.full_score <= 799990:
+            return "A-"
+        if 750000 <= self.full_score <= 789990:
+            return "B+"
+        if 700000 <= self.full_score <= 749990:
+            return "B"
+        if 690000 <= self.full_score <= 699990:
+            return "B-"
+        if 650000 <= self.full_score <= 689990:
+            return "C+"
+        if 600000 <= self.full_score <= 649990:
+            return "C"
+        if 590000 <= self.full_score <= 599990:
+            return "C-"
+        if 550000 <= self.full_score <= 589990:
+            return "D+"
+        if 0 <= self.full_score <= 549990:
+            return "D"
 
     def get_absolute_url(self):
         return reverse('Scores:score-detail', kwargs={'pk': self.pk})
