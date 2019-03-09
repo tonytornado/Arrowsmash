@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 
-from Accounts.models import Profile, user_directory_path
+from Accounts.models import Profile
 
 DIFFICULTY_RATING = (
     ("B", "BEGINNER"),
@@ -10,6 +10,11 @@ DIFFICULTY_RATING = (
     ('E', 'EXPERT'),
     ('C', 'CHALLENGE'),
 )
+
+
+def user_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return 'user_{0}/{1}_proof'.format(instance.player.id, filename)
 
 
 class Mix(models.Model):
@@ -39,7 +44,7 @@ class Song(models.Model):
 
 class Score(models.Model):
     song = models.ForeignKey(Song, models.CASCADE)
-    player = models.ForeignKey(Profile, models.CASCADE)
+    player = models.ForeignKey(Profile, models.CASCADE, related_name='dancer')
     marvelous = models.IntegerField()
     perfect = models.IntegerField()
     great = models.IntegerField()
@@ -48,6 +53,14 @@ class Score(models.Model):
     miss = models.IntegerField()
     proof = models.ImageField(upload_to=user_directory_path)
     date = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def ex_check(self):
+        num_steps = (self.marvelous + self.perfect + self.great + self.good + self.OK + self.miss)
+        if num_steps != self.song.steps:
+            return False
+        else:
+            return True
 
     @property
     def ex(self):
@@ -65,7 +78,7 @@ class Score(models.Model):
         :return:
         """
         num_steps = self.marvelous + self.perfect + self.great + self.good + self.miss
-        marv_score = 1000000 / (Song.steps + self.OK)
+        marv_score = 1000000 / (self.song.steps + self.OK)
         perf_score = marv_score - 10
         great_score = (marv_score * 0.6) - 10
         good_score = (marv_score * 0.2) - 10
@@ -73,7 +86,7 @@ class Score(models.Model):
                 great_score * self.great) + (
                               good_score * self.good) + 0.1) / 10) * 10
         if num_steps != 0:
-            return reg_score
+            return round(reg_score)
 
     @property
     def full_combo(self):

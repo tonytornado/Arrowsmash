@@ -95,5 +95,4 @@ def follower_delete(request, pk):
             return False
         else:
             return redirect('view-profile', pk=pk)
-
     return render(request, 'index.html')

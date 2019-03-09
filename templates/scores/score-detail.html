@@ -9,7 +9,8 @@
         <div class="col-sm-6 rounded p-2">
             <div class="bg-dark p-3 text-center d-flex w-100 justify-content-around">
                 <div>Player: {{ score.player }}</div>
-                <div>Rank: {{ score.score_rank }}</div>
+                <div>Rank: {{ score.letter_grade }}</div>
+                <div>Score: {{ score.full_score }}</div>
             </div>
             <div><img src="{{ score.proof.url }}" class="img-thumbnail
         text-center" alt="Score proof."></div>
@@ -24,6 +25,15 @@
                 </tr>
                 </thead>
                 <tbody>
+                {% if score.full_combo %}
+                    <tr>
+                        {% if score.ex_check is False %}
+                            <td colspan="2" class="text-danger">UNDER REVIEW</td>
+                        {% else %}
+                            <td colspan="2">{{ score.full_combo }}</td>
+                        {% endif %}
+                    </tr>
+                {% endif %}
                 <tr>
                     <td><b>EX SCORE</b></td>
                     <td>{{ score.ex }}</td>

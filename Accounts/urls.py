@@ -9,7 +9,7 @@ app_name = "Accounts"
 urlpatterns = [
     path('admin/', admin.site.urls, name='single_akumu_shinjen'),
     path('update_profile', views.update_profile, name='update-profile'),
-    path('register/', views.register, name='register'),
+    path('register', views.register, name='register'),
     path('profile/', include([
         path('', views.ProfileListing.as_view(), name='profile-list'),
         path('<int:pk>/', views.ProfileView.as_view(), name='view-profile'),

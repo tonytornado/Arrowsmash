@@ -20,11 +20,9 @@ class ScoreDetail(generic.DetailView):
 class ScoreSubmit(generic.CreateView):
     model = Score
     form_class = ScoreForm
-    # fields = ('song', 'score_rank', 'proof')
-    template_name = "generic/form.html"
-    success_url = reverse_lazy('Scores:score-detail')
+    template_name = "scores/score-submit.html"
+    success_url = reverse_lazy('Scores:score-list')
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
         form.instance.player = self.request.user.profile
         return super().form_valid(form)

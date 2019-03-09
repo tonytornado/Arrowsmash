@@ -8,7 +8,6 @@
 {% block content %}
     <h2 class="text-center">Basic Information</h2>
     <form method="post" action="{% url 'Accounts:update-profile' %}" enctype="multipart/form-data" novalidate>
-        {% csrf_token %}
         {% crispy user_form %}
         <hr/>
         <h2 class="text-center">Additional information</h2>
