@@ -7,13 +7,36 @@
     <h3 class="text-center">{{ score.song.name }} - {{ score.song.get_difficulty_display }}</h3>
     <div class="row mx-auto">
         <div class="col-sm-6 rounded p-2">
-            <div class="bg-dark p-3 text-center d-flex w-100 justify-content-around">
-                <div>Player: {{ score.player }}</div>
-                <div>Rank: {{ score.letter_grade }}</div>
-                <div>Score: {{ score.full_score }}</div>
-            </div>
-            <div><img src="{{ score.proof.url }}" class="img-thumbnail
-        text-center" alt="Score proof."></div>
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                <tr>
+                    <th colspan="2">Play Details</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        Player
+                    </td>
+                    <td>
+                        {{ score.player.user.username }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Score</td>
+                    <td>{{ score.full_score }}</td>
+                </tr>
+                <tr>
+                    <td>Score Rank</td>
+                    <td>{{ score.ex }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <img src="{{ score.proof.url }}" alt="Score proof" class="img-thumbnail">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
         <div class="col-sm-6 rounded p-2">
             <table class="table table-bordered text-center">
