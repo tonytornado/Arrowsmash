@@ -3,8 +3,13 @@
 {% block title %}
     Players
 {% endblock %}
+{% block page-title %}
+    All Players
+{% endblock %}
+{% block page-sub-title %}
+    You may want to ctrl + f here.
+{% endblock %}
 {% block content %}
-    <h2>Current Players</h2>
     <div>
         <ul class="list-group">
             {% for profile in profile_list %}

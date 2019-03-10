@@ -2,12 +2,17 @@
 {% block title %}
     Score Listing
 {% endblock %}
+{% block page-title %}
+    Scores!
+{% endblock %}
+{% block page-sub-title %}
+    The latest scores from the network!
+{% endblock %}
 {% block content %}
-    <h2>Scores!</h2>
     {% if score_list.count > 0 %}
         <div class="row text-center">
             <div class="col-md mx-auto">
-                <h2>Latest Scores</h2>
+                <h2 class="border my-0">Latest Scores</h2>
                 <table class="table table-striped" id="latest_scores">
                     <thead class="thead-light">
                     <tr>
@@ -64,7 +69,7 @@
             {#            {% endif %}#}
 
             {% if user.is_authenticated %}
-                <div class="col-md-6 mx-auto"><h2>Your scores</h2>
+                <div class="col-md-6 mx-auto"><h2 class="border my-0">Your scores</h2>
                     <table class="table table-striped" id="user_scores">
                         <thead class="thead-light">
                         <tr>

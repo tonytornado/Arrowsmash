@@ -3,11 +3,13 @@
 {% block title %}
     Tournaments!
 {% endblock %}
-{% block header %}
+{% block page-title %}
+    Events
+{% endblock %}
+{% block page-sub-title %}
+    Check for an event in your area!
 {% endblock %}
 {% block content %}
-    <h2>Tournament Mode!</h2>
-
     {% if tournament_list.count > 0 %}
         <ul class="list-group">
     {% for tournament in tournament_list %}
@@ -17,7 +19,7 @@
     {% endfor %}
     </ul>
     {% else %}
-        <h4>No tournaments found.</h4>
+        <h4 class="text-center">No events found.</h4>
     {% endif %}
 
 {% endblock %}

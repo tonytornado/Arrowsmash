@@ -5,14 +5,16 @@
 {% block title %}
     Profile View
 {% endblock %}
+{% block page-title %}
+    <h2 class="mb-0">{{ profile.user.username }}</h2>
+{% endblock %}
+{% block page-sub-title %}
+    <p class="text-right border-top bg-primary py-2 mb-1">{{ profile.age }} | {{ profile.get_gender_display }}
+            | {{ profile.score_set.count }}
+        score{{ profile.score_set.count|pluralize }} &nbsp;</p>
+{% endblock %}
 
 {% block content %}
-    <header class="text-center">
-        <h2 class="border mb-0">{{ profile.user.username }}</h2>
-        <p class="text-right border bg-primary pt-0">{{ profile.age }} | {{ profile.get_gender_display }}
-            | {{ profile.score_set.count }}
-            score{{ profile.score_set.count|pluralize }} &nbsp;</p>
-    </header>
     <section class="row mx-auto">
         <div class="col-sm-4 d-flex align-items-center" id="avatar_container">
             <img src="{{ profile.avatar.url }}" alt="AVATAR" class="img-thumbnail img-circle-avatar" height="100"

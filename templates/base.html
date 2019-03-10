@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{% static 'Accounts/css/main.css' %}">
 </head>
 <body>
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark shadow">
     <h2><a class="navbar-brand" href="{% url 'home' %}">4RROWSMASH</a></h2>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,11 +77,15 @@
 </nav>
 <header id="banner" class="text-center">
     {% block header %}{% endblock %}
+    <div class="text-center py-3 shadow bg-secondary text-light">
+        <h2>{% block page-title %}{% endblock %}</h2>
+        <h5 class="pb-4">{% block page-sub-title %}{% endblock %}</h5>
+    </div>
     {% if messages %}
-        <ul class="list-group">
+        <ul class="list-group container">
             {% for message in messages %}
                 <li{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>
-                    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}ERR0R: {% endif %}
                     {{ message }}
                 </li>
             {% endfor %}
