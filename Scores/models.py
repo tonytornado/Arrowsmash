@@ -44,7 +44,7 @@ class Song(models.Model):
 
 class Score(models.Model):
     song = models.ForeignKey(Song, models.CASCADE)
-    player = models.ForeignKey(Profile, models.CASCADE, related_name='dancer')
+    player = models.ForeignKey(Profile, models.CASCADE)
     marvelous = models.IntegerField()
     perfect = models.IntegerField()
     great = models.IntegerField()
