@@ -6,12 +6,14 @@
     Profile View
 {% endblock %}
 {% block page-title %}
-    <h2 class="mb-0">{{ profile.user.username }}</h2>
+    <h2 class="mb-1">{{ profile.user.username }}</h2>
 {% endblock %}
 {% block page-sub-title %}
-    <p class="text-right border-top bg-primary py-2 mb-1">{{ profile.age }} | {{ profile.get_gender_display }}
+    <p class="text-right border-top bg-primary p-1">
+        <small>{{ profile.age }} | {{ profile.get_gender_display }}
             | {{ profile.score_set.count }}
-        score{{ profile.score_set.count|pluralize }} &nbsp;</p>
+            score{{ profile.score_set.count|pluralize }} </small>
+    </p>
 {% endblock %}
 
 {% block content %}
@@ -91,9 +93,9 @@
                     {% for score in profile.score_set.all %}
                         <tr>
                             <td scope="col">
-                                {{ score.date }}</td>
-                            <td>{{ score.song }}</td>
-                            <td>{{ score.score_rank }}</td>
+                                {{ score.date|date }}</td>
+                            <td>{{ score.song.name }} [{{ score.song.difficulty }}]</td>
+                            <td>{{ score.letter_grade }}</td>
                             <td>{{ score.ex }}</td>
                         </tr>
                     {% endfor %}

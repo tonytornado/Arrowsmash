@@ -12,10 +12,10 @@
 {% block content %}
     <div class="row mx-auto">
         <div class="col-sm-6 rounded p-2">
-            <table class="table table-bordered">
+            <table class="table table-bordered text-center">
                 <thead class="thead-light">
                 <tr>
-                    <th colspan="2">Play Details for {{ score.date }}</th>
+                    <th colspan="2"><h3>Play Details for {{ score.date|date }}</h3></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -33,7 +33,7 @@
                 </tr>
                 <tr>
                     <td>Score Rank</td>
-                    <td>{{ score.ex }}</td>
+                    <td><b>{{ score.letter_grade }}</b></td>
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -48,7 +48,7 @@
                 <thead class="thead-light">
                 <tr>
                     <th colspan="2">
-                        Score Details
+                        <h3>Score Breakdown</h3>
                     </th>
                 </tr>
                 </thead>

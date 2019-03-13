@@ -13,14 +13,14 @@
     <link rel="stylesheet" href="{% static 'Accounts/css/main.css' %}">
 </head>
 <body>
-<nav class="navbar navbar-expand-md navbar-dark bg-dark shadow">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark shadow py-0">
     <h2><a class="navbar-brand" href="{% url 'home' %}">4RROWSMASH</a></h2>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav py-0">
             {% if user.is_authenticated %}
                 <li class="nav-item active">
                     <a class="nav-link" href="{% url 'Tourney:tournament-list' %}">Tournaments</a>

@@ -107,7 +107,7 @@ class Score(models.Model):
                 else:
                     return "Green [Great Full Combo]"
             else:
-                return "Blue [Good Full Combo"
+                return "Blue [Good Full Combo]"
         else:
             return False
 
