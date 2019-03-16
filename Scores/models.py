@@ -1,7 +1,6 @@
+from Accounts.models import Profile
 from django.db import models
 from django.urls import reverse
-
-from Accounts.models import Profile
 
 
 def user_directory_path(instance, filename):
@@ -64,10 +63,22 @@ class Song(models.Model):
             return f"{self.min_bpm} - {self.max_bpm}"
 
 
+DIFFICULTY_SELECT = (
+    ("1", "BEG"),
+    ("2", "BSP"),
+    ('3', "DSP"),
+    ("4", "ESP"),
+    ("5", "CSP"),
+    ("6", "BDP"),
+    ("7", "DDP"),
+    ("8", "EDP"),
+)
+
+
 class Score(models.Model):
     song = models.ForeignKey(Song, models.CASCADE)
     player = models.ForeignKey(Profile, models.CASCADE)
-    difficulty = models.CharField(max_length=3)
+    difficulty = models.CharField(choices=DIFFICULTY_SELECT, default=1, max_length=1)
     marvelous = models.IntegerField()
     perfect = models.IntegerField()
     great = models.IntegerField()
@@ -133,7 +144,6 @@ class Score(models.Model):
                                   good_score * self.good) + 0.1) / 10) * 10
             if num_steps != 0:
                 return round(reg_score)
-
 
     @property
     def full_combo(self):
