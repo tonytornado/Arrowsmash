@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'Accounts.apps.AccountsConfig',
     'Scores.apps.ScoresConfig',
     'Tourney.apps.TourneyConfig',
-    'crispy_forms'
+    'crispy_forms',
+    'import_export'
 ]
 
 MIDDLEWARE = [

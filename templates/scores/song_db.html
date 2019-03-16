@@ -1,0 +1,34 @@
+{% extends base.html %}
+
+{% block title %}
+    Song DB
+{% endblock %}
+{% block content %}
+    {% if song_list %}
+        <table>
+        <thead class="thead-light">
+        <tr>
+        <th>Name</th>
+        <th>Artist</th>
+        <th>BPM</th>
+        <th>Beginner</th>
+        <th>Basic</th>
+        <th>Difficult</th>
+        <th>Expert</th>
+        <th>Challenge</th>
+        </thead>
+        </tr>
+        {% for song in song_list %}
+                 <tr>
+                    <td>{{ song.name }}</td>
+                 <td>{{ song.artist }}</td>
+                 <td>{{ song.bpm }}</td>
+                 <td>{{ song.beg_step_count }}</td>
+                 <td>{{ song.bsp_step_count }}</td>
+                 <td>{{ song.dsp_step_count }}</td>
+                 <td>{{ song.esp_step_count }}</td>
+                 </tr>
+        {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}

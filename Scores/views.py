@@ -2,7 +2,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from Scores.forms import ScoreForm
-from Scores.models import Score
+from Scores.models import Score, Song
 
 
 class ScoreListing(generic.ListView):
@@ -26,3 +26,9 @@ class ScoreSubmit(generic.CreateView):
     def form_valid(self, form):
         form.instance.player = self.request.user.profile
         return super().form_valid(form)
+
+
+class SongDB(generic.ListView):
+    model = Song
+    queryset = Song.objects.all()
+    template_name = "scores/song_db.html"
