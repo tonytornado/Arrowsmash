@@ -1,6 +1,7 @@
-from Accounts.models import Profile
 from django.db import models
 from django.urls import reverse
+
+from Accounts.models import Profile
 
 
 def user_directory_path(instance, filename):
@@ -89,6 +90,11 @@ class Score(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
     def song_list(self, argument):
+        """
+        Returns the steps of the current song based on the difficulty
+        :param argument: usually set to the difficulty of the song chosen
+        :return:
+        """
         song_type = {
             "BEG": self.song.beg_steps + self.song.beg_holds,
             "BSP": self.song.bsp_steps + self.song.bsp_holds,
@@ -102,6 +108,7 @@ class Score(models.Model):
         }
         return song_type.get(argument, 0)
 
+    @property
     def ex_check(self):
         tip = self.difficulty
         steps = Score.song_list(self, tip)
