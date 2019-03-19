@@ -114,10 +114,10 @@ class Score(models.Model):
         steps = Score.song_list(self, tip)
 
         num_steps = (self.marvelous + self.perfect + self.great + self.good + self.OK + self.miss)
-        if num_steps != steps:
-            return False
-        else:
+        if num_steps == steps:
             return True
+        else:
+            return False
 
     @property
     def ex(self):
@@ -138,8 +138,7 @@ class Score(models.Model):
         steps = Score.song_list(self, tip)
 
         if (steps + self.OK) == 0:
-            reg_score = 0
-            return reg_score
+            return "N/A"
         else:
             num_steps = self.marvelous + self.perfect + self.great + self.good + self.miss
             marv_score = 1000000 / (steps + self.OK)
@@ -181,36 +180,39 @@ class Score(models.Model):
         Returns a letter grade for the song
         :return:
         """
-        if self.full_score >= 990000:
-            return "AAA"
-        if 950000 <= self.full_score <= 989990:
-            return "AA+"
-        if 900000 <= self.full_score <= 949990:
-            return "AA"
-        if 890000 <= self.full_score <= 899990:
-            return "AA-"
-        if 850000 <= self.full_score <= 889990:
-            return "A+"
-        if 800000 <= self.full_score <= 849990:
-            return "A"
-        if 790000 <= self.full_score <= 799990:
-            return "A-"
-        if 750000 <= self.full_score <= 789990:
-            return "B+"
-        if 700000 <= self.full_score <= 749990:
-            return "B"
-        if 690000 <= self.full_score <= 699990:
-            return "B-"
-        if 650000 <= self.full_score <= 689990:
-            return "C+"
-        if 600000 <= self.full_score <= 649990:
-            return "C"
-        if 590000 <= self.full_score <= 599990:
-            return "C-"
-        if 550000 <= self.full_score <= 589990:
-            return "D+"
-        if 0 <= self.full_score <= 549990:
-            return "D / E"
+        if self.full_score is int:
+            if self.full_score >= 990000:
+                return "AAA"
+            if 950000 <= self.full_score <= 989990:
+                return "AA+"
+            if 900000 <= self.full_score <= 949990:
+                return "AA"
+            if 890000 <= self.full_score <= 899990:
+                return "AA-"
+            if 850000 <= self.full_score <= 889990:
+                return "A+"
+            if 800000 <= self.full_score <= 849990:
+                return "A"
+            if 790000 <= self.full_score <= 799990:
+                return "A-"
+            if 750000 <= self.full_score <= 789990:
+                return "B+"
+            if 700000 <= self.full_score <= 749990:
+                return "B"
+            if 690000 <= self.full_score <= 699990:
+                return "B-"
+            if 650000 <= self.full_score <= 689990:
+                return "C+"
+            if 600000 <= self.full_score <= 649990:
+                return "C"
+            if 590000 <= self.full_score <= 599990:
+                return "C-"
+            if 550000 <= self.full_score <= 589990:
+                return "D+"
+            if 0 <= self.full_score <= 549990:
+                return "D / E"
+        else:
+            return "N/A"
 
     def get_absolute_url(self):
         return reverse('Scores:score-detail', kwargs={'pk': self.pk})

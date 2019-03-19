@@ -25,7 +25,7 @@ def register(request):
                                        instance=user.profile)  # Reload the profile form with the profile instance
             profile_form.full_clean()
             profile_form.save()  # Gracefully save the form
-            return redirect('Accounts:login')
+            return redirect('login')
     else:
         user_form = UserForm()
         profile_form = ProfileForm()
