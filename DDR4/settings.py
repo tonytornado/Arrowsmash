@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Accounts.apps.AccountsConfig',
     'Scores.apps.ScoresConfig',
-    'Tourney.apps.TourneyConfig',
+    'League.apps.TourneyConfig',
     'crispy_forms',
     'import_export'
 ]

@@ -1,21 +1,21 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Tournaments!
+    Leagues
 {% endblock %}
 {% block page-title %}
-    Events
+    League Events
 {% endblock %}
 {% block page-sub-title %}
     Check for an event in your area!
 {% endblock %}
 {% block content %}
-    {% if tournament_list.count > 0 %}
+    {% if league_list.count > 0 %}
         <ul class="list-group">
-    {% for tournament in tournament_list %}
+            {% for league in league_list %}
         <li class="list-group-item bg-dark"><a
-                href="{% url 'Tourney:tournament-view' tournament.pk %}"
-                class="btn btn-block btn-outline-light">{{ tournament.name }}</a></li>
+                href="{% url 'League:league-view' league.pk %}"
+                class="btn btn-block btn-outline-light">{{ league.name }}</a></li>
     {% endfor %}
     </ul>
     {% else %}

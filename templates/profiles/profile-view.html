@@ -92,7 +92,7 @@
                     <tbody>
                     {% for score in profile.score_set.all %}
                         <tr>
-                            <td scope="col">
+                            <td>
                                 {{ score.date|date }}</td>
                             <td>{{ score.song.name }} [{{ score.song.difficulty }}]</td>
                             <td>{{ score.letter_grade }}</td>
@@ -104,19 +104,19 @@
                 <hr/>
             </div>
         {% endif %}
-        {% if profile.user.tournament.tournamententry_set %}
+        {% if profile.user.league.leagueentry_set %}
 
-            <div class="text-center col-sm-6" id="tournaments_entered">
-                {% if profile.user.tournament.tournamententry_set.count > 0 %}
-                    <h3 class="border mb-0">Tournaments Entered</h3>
+            <div class="text-center col-sm-6" id="leagues_entered">
+                {% if profile.user.league.leagueentry_set.count > 0 %}
+                    <h3 class="border mb-0">Leagues Entered</h3>
                     <table class="table table-borderless">
                         <thead class="thead-light">
                         <tr>
-                            <th colspan="2">Tournaments</th>
+                            <th colspan="2">Leagues</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for entry in profile.user.tournament.tournamententry_set.all %}
+                        {% for entry in profile.user.league.leagueentry_set.all %}
                             {% if entry.tourney.deadline %}
                             {% else %}
                                 <tr>
@@ -134,13 +134,13 @@
         {% endif %}
 
         {% if profile.winner.count > 0 or profile.second_place.count > 0 or profile.third_place.count > 0 %}
-            <div class="col-sm-6" id="tournament_placement">
-                <h3 class="border mb-0">Tournaments Placed</h3>
+            <div class="col-sm-6" id="league_placement">
+                <h3 class="border mb-0">Leagues Placed</h3>
                 <table class="table table-borderless">
                     <thead class="thead-light">
                     <tr>
                         <th scope="col">Placement</th>
-                        <th scope="col">Tournament</th>
+                        <th scope="col">League</th>
                         <th scope="col">Date</th>
                     </tr>
                     </thead>
@@ -148,7 +148,7 @@
                     {% if profile.winner.count > 0 %}
                         {% for tourney in profile.winner.all %}
                             <tr>
-                                <td scope="col">Winner!</td>
+                                <td>Winner!</td>
                                 <td>{{ tourney.tourney }}</td>
                                 <td>{{ tourney.tourney.Date }}</td>
                             </tr>
@@ -156,14 +156,14 @@
                     {% elif profile.second_place.count > 0 %}
                         {% for tourney in profile.second_place.all %}
                             <tr>
-                                <td scope="col">2nd</td>
+                                <td>2nd</td>
                                 <td>{{ tourney.tourney }}</td>
                                 <td>{{ tourney.tourney.Date }}</td>
                             </tr>{% endfor %}
                     {% elif profile.third_place.count > 0 %}
                         {% for tourney in profile.third_place.all %}
                             <tr>
-                                <td scope="col">3rd</td>
+                                <td>3rd</td>
                                 <td>{{ tourney.tourney }}</td>
                                 <td>{{ tourney.tourney.Date }}</td>
                             </tr>

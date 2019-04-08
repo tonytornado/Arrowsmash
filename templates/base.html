@@ -23,7 +23,7 @@
         <ul class="navbar-nav py-0">
             {% if user.is_authenticated %}
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'Tourney:tournament-list' %}">Tournaments</a>
+                    <a class="nav-link" href="{% url 'League:league-list' %}">League</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="{% url 'Scores:score-list' %}">Scores <span
