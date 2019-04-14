@@ -3,11 +3,11 @@ Project Arrowsmash!
 This is a rather simple little project that is dedicated to tracking scores in Dance Dance Revolution.  
 What am I generally working to accomplish here?
 
-* Basic score tracking with a leaderboard system.
-* Social network features such as posting feeds and friendships
-* A rather robust library of features associated with news and blogging
 
-_Those are the immediate goals._
+_Immediate goals._
+* Basic score tracking with a leader board system
+* Social network features such as post feeds and followers
+* Support for leagues and league events
 
 ---
  
