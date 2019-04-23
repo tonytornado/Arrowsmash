@@ -20,7 +20,11 @@ class LeagueView(generic.DetailView):
 
 @login_required
 def enter_league(request, pk):
-    """For adding someone to a League"""
+    """For adding someone to a League
+    :param request: User stats
+    :param pk: PK for league
+    :return:
+    """
     if request.method == "POST":
         event = League.objects.get(pk=pk)
         entry = request.user.profile
@@ -32,3 +36,13 @@ def enter_league(request, pk):
             return redirect('League:league-entry', pk=pk)
 
     return render(request, "leagues/league-view-all.html")
+
+
+@login_required
+def add_trial(request, pk):
+    """
+    For adding a trial to your profile
+    :param request: User stats
+    :param pk: PK for the trial
+    """
+    pass
