@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.views import generic
 
-from League.models import League, LeagueEntry, LeagueManager
+from League.models import League, LeagueEntry, LeagueManager, TrialManager, TrialEntry, Trial
 
 
 class LeagueViewAll(generic.ListView):
@@ -16,6 +16,18 @@ class LeagueView(generic.DetailView):
     model = League
     queryset = League.objects.all()
     template_name = "leagues/league-view.html"
+
+
+class TrialViewAll(generic.ListView):
+    model = Trial
+    queryset = Trial.objects.all()
+    template_name = "leagues/trial-view-all.html"
+
+
+class TrialView(generic.DetailView):
+    model = Trial
+    queryset = Trial.objects.all()
+    template_name = "leagues/trial-view.html"
 
 
 @login_required
@@ -45,4 +57,14 @@ def add_trial(request, pk):
     :param request: User stats
     :param pk: PK for the trial
     """
-    pass
+    if request.method == "POST":
+        event = Trial.objects.get(pk=pk)
+        dancer = request.user.profile
+        try:
+            TrialManager.start_trial(event=event, dancer=dancer)
+        except TrialEntry.DoesNotExist:
+            return False
+        else:
+            return redirect('League:trial-entry')
+
+    return render(request, "leagues/trial-view-all.html")

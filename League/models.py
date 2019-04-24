@@ -67,8 +67,17 @@ class LeagueEntry(models.Model):
     tourneys = LeagueManager()
 
 
+class TrialManager(models.Manager):
+    """Trial management"""
+
+    @staticmethod
+    def start_trial(event, dancer):
+        rel = TrialEntry.trials.get_or_create(trial=event, player=dancer)
+        return rel
+
+
 class Trial(models.Model):
-    """Model for Trial Entry"""
+    """Model for Trials"""
     title = models.CharField(max_length=100)
     deadline = models.DateTimeField()
     division = models.CharField(choices=DIVISION_CHOICES, max_length=1)
@@ -76,9 +85,18 @@ class Trial(models.Model):
     song2 = models.ForeignKey(Song, models.CASCADE, related_name="second_song")
     song3 = models.ForeignKey(Song, models.CASCADE, related_name="third_song")
     song4 = models.ForeignKey(Song, models.CASCADE, related_name="final_song")
+    art = models.ImageField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.title} - {self.deadline}"
 
     def trial_list(self):
         return f"{self.song1.name}, {self.song2.name}, {self.song3.name}, {self.song4.name}"
+
+
+class TrialEntry(models.Model):
+    """Model for trial entry"""
+    trial = models.ForeignKey(Trial, models.CASCADE, related_name="challenge")
+    player = models.ForeignKey(Profile, models.CASCADE, related_name="challenger")
+
+    trials = TrialManager()

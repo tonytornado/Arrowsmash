@@ -6,9 +6,12 @@ from League import views
 
 app_name = "League"
 urlpatterns = [
-    path('', views.LeagueViewAll.as_view(), name='league-list'),
-    path('<int:pk>', views.LeagueView.as_view(), name='league-view'),
-    path('t_entry/<int:pk>', views.enter_league, name='league-entry'),
+    path('l/', views.LeagueViewAll.as_view(), name='league-list'),
+    path('l/<int:pk>', views.LeagueView.as_view(), name='league-view'),
+    path('l/league/<int:pk>', views.enter_league, name='league-entry'),
+    path('t/', views.TrialViewAll.as_view(), name='trial-list'),
+    path('t/<int:pk>', views.TrialView.as_view(), name='trial-view'),
+    path('t/trial/<int:pk>', views.add_trial, name='trial-entry'),
 ]
 
 if settings.DEBUG:
