@@ -79,18 +79,17 @@
     </div>
 </nav>
 <header id="banner" class="text-center">
-    {% block header %}{% endblock %}
+    {% block header %}
+
+    {% endblock %}
     <div class="text-center py-3 shadow bg-secondary text-light">
         <h2>{% block page-title %}{% endblock %}</h2>
         <h5 class="pb-4">{% block page-sub-title %}{% endblock %}</h5>
     </div>
     {% if messages %}
-        <ul class="list-group container">
+        <ul class="messages">
             {% for message in messages %}
-                <li{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>
-                    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}ERR0R: {% endif %}
-                    {{ message }}
-                </li>
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
             {% endfor %}
         </ul>
     {% endif %}

@@ -11,25 +11,22 @@
 {% endblock %}
 {% block content %}
     {% if trial_list %}
-        <table class="table table-bordered">
-            <thead>
+        <table class="table table-striped table-dark table-bordered text-center">
+            <thead class="thead-light">
             <th>Name</th>
-            <th>Deadline</th>
             <th>Division</th>
+            <th>Deadline</th>
             <th colspan="4">Songs</th>
-            <th>Entry</th>
             </thead>
-            <tbody>
+            <tbody class="tbody-light">
             {% for trial in trial_list %}
-                <td class="td">
                 <td><a href="{% url 'League:trial-view' pk=trial.pk %}">{{ trial.title }}</a></td>
                 <td>{{ trial.division }}</td>
-                <td>{{ trial.deadline }}</td>
+                <td>{{ trial.deadline|date }}</td>
                 <td>{{ trial.song1 }}</td>
                 <td>{{ trial.song2 }}</td>
                 <td>{{ trial.song3 }}</td>
                 <td>{{ trial.song4 }}</td>
-                <td><a href="{% url 'trial-entry' %}" class="btn btn-default">Entry</a></td>
             {% endfor %}
             </tbody>
         </table>{% else %}

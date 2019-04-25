@@ -1,4 +1,4 @@
-# Create your views here.
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.views import generic
@@ -45,8 +45,10 @@ def enter_league(request, pk):
         except LeagueEntry.DoesNotExist:
             return False
         else:
-            return redirect('League:league-entry', pk=pk)
+            messages.error(request, "ERROR: Something went wrong.")
+            return redirect('League:league-view', pk)
 
+    messages.success(request, "Success! You're in.")
     return render(request, "leagues/league-view-all.html")
 
 
@@ -65,6 +67,8 @@ def add_trial(request, pk):
         except TrialEntry.DoesNotExist:
             return False
         else:
-            return redirect('League:trial-entry')
+            messages.error(request, "ERROR: Something went wrong.")
+            return redirect('League:trial-view', pk)
 
+    messages.success(request, "Success! You're in.")
     return render(request, "leagues/trial-view-all.html")

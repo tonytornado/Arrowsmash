@@ -80,7 +80,7 @@
         {% if profile.score_set.count > 0 %}
             <div class="col-sm-6" id="latest_score">
                 <h3 class="border mb-0">Latest Scores</h3>
-                <table class="table table-borderless">
+                <table class="table table-striped table-dark table-bordered">
                     <thead class="thead-light">
                     <tr>
                         <th scope="col">Date</th>
@@ -109,7 +109,7 @@
             <div class="text-center col-sm-6" id="leagues_entered">
                 {% if profile.user.league.leagueentry_set.count > 0 %}
                     <h3 class="border mb-0">Leagues Entered</h3>
-                    <table class="table table-borderless">
+                    <table class="table table-striped table-dark table-bordered">
                         <thead class="thead-light">
                         <tr>
                             <th colspan="2">Leagues</th>
@@ -136,7 +136,7 @@
         {% if profile.winner.count > 0 or profile.second_place.count > 0 or profile.third_place.count > 0 %}
             <div class="col-sm-6" id="league_placement">
                 <h3 class="border mb-0">Leagues Placed</h3>
-                <table class="table table-borderless">
+                <table class="table table-striped table-dark table-bordered">
                     <thead class="thead-light">
                     <tr>
                         <th scope="col">Placement</th>

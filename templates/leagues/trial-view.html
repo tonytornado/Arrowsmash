@@ -9,15 +9,16 @@
 {% block page-sub-title %}
     {{ trial.title }}
 {% endblock %}
-{% block header %}
-    <img src="{{ trial.art.url }}">
-{% endblock %}
 {% block content %}
     <ul class="list-group">
-        <li class="list-group-item">{{ trial.song1.name }}</li>
-        <li class="list-group-item">{{ trial.song2.name }}</li>
-        <li class="list-group-item">{{ trial.song3.name }}</li>
-        <li class="list-group-item">{{ trial.song4.name }}</li>
+        <li class="list-group-item list-group-item-dark">{{ trial.song1.name }}</li>
+        <li class="list-group-item list-group-item-dark">{{ trial.song2.name }}</li>
+        <li class="list-group-item list-group-item-dark">{{ trial.song3.name }}</li>
+        <li class="list-group-item list-group-item-dark">{{ trial.song4.name }}</li>
     </ul>
-    <p>Deadline for scores: {{ trial.deadline }}</p>
+    <p class="lead text-center">Deadline for scores: {{ trial.deadline|date }}</p>
+    <form action="{% url 'League:trial-entry' trial.pk %}" method="post">
+        {% csrf_token %}
+        <button class="btn btn-block btn-primary">Accept this trial?</button>
+    </form>
 {% endblock %}

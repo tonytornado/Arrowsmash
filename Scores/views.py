@@ -22,6 +22,7 @@ class ScoreSubmit(generic.CreateView):
     form_class = ScoreForm
     template_name = "scores/score-submit.html"
     success_url = reverse_lazy('Scores:score-list')
+    success_message = "Score submitted!"
 
     def form_valid(self, form):
         form.instance.player = self.request.user.profile
