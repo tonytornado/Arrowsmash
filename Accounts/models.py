@@ -26,13 +26,13 @@ FRIENDSHIP_STATUS = (
 
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return 'user_{0}/{1}'.format(instance.user.id, filename)
+    return f"images/user_{instance.user.id}/{filename}"
 
 
 class Profile(models.Model):
     """    Main profile class that needs all the work.    """
     user = models.OneToOneField(User, models.CASCADE)
-    avatar = models.ImageField(upload_to=user_directory_path, default='default.jpg')
+    avatar = models.ImageField(upload_to=user_directory_path, default='images/default.jpg')
     rival_code = models.CharField(max_length=9, blank=True)
     tagline = models.CharField(max_length=100, blank=True, help_text="It's your life. What's its tag line?")
     DOB = models.DateField(null=True, blank=True)
@@ -73,6 +73,8 @@ class Profile(models.Model):
 
 
 class FollowManager(models.Manager):
+    """Follower Management"""
+
     @staticmethod
     def follow(follower, followee):
         if follower == followee:

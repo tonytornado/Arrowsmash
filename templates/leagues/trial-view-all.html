@@ -10,26 +10,30 @@
     We thought you could use the extra challenge
 {% endblock %}
 {% block content %}
-    <table class="table table-bordered">
-        <thead>
-        <th>Name</th>
-        <th>Deadline</th>
-        <th>Division</th>
-        <th colspan="4">Songs</th>
-        <th>Entry</th>
-        </thead>
-        <tbody>
-        {% for trial in trial_list %}
-            <td class="td">
-            <td>{{ trial.title }}</td>
-            <td>{{ trial.division }}</td>
-            <td>{{ trial.deadline }}</td>
-            <td>{{ trial.song1 }}</td>
-            <td>{{ trial.song2 }}</td>
-            <td>{{ trial.song3 }}</td>
-            <td>{{ trial.song4 }}</td>
-            <td><a href="{% url 'trial-entry' %}" class="btn btn-default">Entry</a></td>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% if trial_list %}
+        <table class="table table-bordered">
+            <thead>
+            <th>Name</th>
+            <th>Deadline</th>
+            <th>Division</th>
+            <th colspan="4">Songs</th>
+            <th>Entry</th>
+            </thead>
+            <tbody>
+            {% for trial in trial_list %}
+                <td class="td">
+                <td><a href="{% url 'League:trial-view' pk=trial.pk %}">{{ trial.title }}</a></td>
+                <td>{{ trial.division }}</td>
+                <td>{{ trial.deadline }}</td>
+                <td>{{ trial.song1 }}</td>
+                <td>{{ trial.song2 }}</td>
+                <td>{{ trial.song3 }}</td>
+                <td>{{ trial.song4 }}</td>
+                <td><a href="{% url 'trial-entry' %}" class="btn btn-default">Entry</a></td>
+            {% endfor %}
+            </tbody>
+        </table>{% else %}
+        <p class="text-center">No trials loaded.</p>
+
+    {% endif %}
 {% endblock %}

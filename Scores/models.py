@@ -6,7 +6,7 @@ from Accounts.models import Profile
 
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return 'user_{0}/proof_{1}'.format(instance.player.id, filename)
+    return f'images/user_{instance.player.id}/proof_{filename}'
 
 
 class Mix(models.Model):

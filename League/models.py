@@ -1,7 +1,9 @@
-import datetime
+from datetime import datetime
+from typing import Tuple
 
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.fields.files import ImageFieldFile
 
 from Accounts.models import Profile
 from Scores.models import Mix, Song
@@ -15,7 +17,7 @@ DIVISION_CHOICES = [
 
 
 class LeagueManager(models.Manager):
-    """A League manager"""
+    """League manager"""
 
     @staticmethod
     def enter_league(event, entry, div=None):
@@ -27,7 +29,7 @@ class LeagueManager(models.Manager):
         """
         if div is None:
             div = 2
-        rel = LeagueEntry.tourneys.get_or_create(tourney=event, entrants=entry, division=div)
+        rel = LeagueEntry.objects.get_or_create(tourney=event, entrants=entry, division=div)
         return rel
 
     def __str__(self):
@@ -40,8 +42,8 @@ class League(models.Model):
     organizer = models.OneToOneField(User, on_delete=models.CASCADE)
     mix = models.OneToOneField(Mix, on_delete=models.CASCADE)
     rules = models.TextField(max_length=10000, help_text="Detail all of the rules of your League here.")
-    competition_date_start = models.DateField(default=datetime.date.today)
-    competition_date_end = models.DateField(default=datetime.date.today)
+    competition_date_start = models.DateField(default=datetime.now)
+    competition_date_end = models.DateField(default=datetime.now)
 
     def __str__(self):
         return f"{self.name}, {self.competition_date_start} - {self.competition_date_end}"
@@ -64,7 +66,7 @@ class LeagueEntry(models.Model):
     entrants = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, related_name='entrant')
     division = models.CharField(choices=DIVISION_CHOICES, max_length=1)
 
-    tourneys = LeagueManager()
+    federation = LeagueManager()
 
 
 class TrialManager(models.Manager):
@@ -72,20 +74,26 @@ class TrialManager(models.Manager):
 
     @staticmethod
     def start_trial(event, dancer):
-        rel = TrialEntry.trials.get_or_create(trial=event, player=dancer)
+        """
+        For adding a trial.
+        :param event: Trial itself.
+        :param dancer: The profile of the player taking it on.
+        :return:
+        """
+        rel: Tuple[TrialEntry, bool] = TrialEntry.objects.get_or_create(trial=event, player=dancer)
         return rel
 
 
 class Trial(models.Model):
     """Model for Trials"""
-    title = models.CharField(max_length=100)
-    deadline = models.DateTimeField()
-    division = models.CharField(choices=DIVISION_CHOICES, max_length=1)
-    song1 = models.ForeignKey(Song, models.CASCADE, related_name="first_song")
-    song2 = models.ForeignKey(Song, models.CASCADE, related_name="second_song")
-    song3 = models.ForeignKey(Song, models.CASCADE, related_name="third_song")
-    song4 = models.ForeignKey(Song, models.CASCADE, related_name="final_song")
-    art = models.ImageField(null=True, blank=True)
+    title: str = models.CharField(max_length=100)
+    deadline: datetime = models.DateTimeField()
+    division: str = models.CharField(choices=DIVISION_CHOICES, max_length=1)
+    song1: Song = models.ForeignKey(Song, models.CASCADE, related_name="first_song")
+    song2: Song = models.ForeignKey(Song, models.CASCADE, related_name="second_song")
+    song3: Song = models.ForeignKey(Song, models.CASCADE, related_name="third_song")
+    song4: Song = models.ForeignKey(Song, models.CASCADE, related_name="final_song")
+    art: ImageFieldFile = models.ImageField(null=True, blank=True, upload_to='images/trial_art')
 
     def __str__(self):
         return f"{self.title} - {self.deadline}"
@@ -96,7 +104,7 @@ class Trial(models.Model):
 
 class TrialEntry(models.Model):
     """Model for trial entry"""
-    trial = models.ForeignKey(Trial, models.CASCADE, related_name="challenge")
-    player = models.ForeignKey(Profile, models.CASCADE, related_name="challenger")
+    trial: Trial = models.ForeignKey(Trial, models.CASCADE, related_name="challenge")
+    player: Profile = models.ForeignKey(Profile, models.CASCADE, related_name="challenger")
 
-    trials = TrialManager()
+    objects: TrialManager = TrialManager()
