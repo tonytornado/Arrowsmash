@@ -13,6 +13,18 @@ def logout_view(request):
     logout(request)
 
 
+class ProfileView(generic.DetailView):
+    model = Profile
+    queryset = Profile.objects.all()
+    template_name = 'profiles/profile-view.html'
+
+
+class ProfileListing(generic.ListView):
+    model = Profile
+    queryset = Profile.objects.all()
+    template_name = 'profiles/view-all.html'
+
+
 @transaction.atomic
 def register(request):
     if request.method == 'POST':
@@ -57,18 +69,6 @@ def update_profile(request):
     })
 
 
-class ProfileView(generic.DetailView):
-    model = Profile
-    queryset = Profile.objects.all()
-    template_name = 'profiles/profile-view.html'
-
-
-class ProfileListing(generic.ListView):
-    model = Profile
-    queryset = Profile.objects.all()
-    template_name = 'profiles/view-all.html'
-
-
 @login_required
 def follower_add(request, pk):
     if request.method == 'POST':
@@ -79,7 +79,7 @@ def follower_add(request, pk):
         except Follow.DoesNotExist:
             return False
         else:
-            return redirect('view-profile', pk=pk)
+            return redirect('Accounts:view-profile', pk=pk)
 
     return render(request, 'index.html')
 
@@ -94,5 +94,5 @@ def follower_delete(request, pk):
         except Follow.DoesNotExist:
             return False
         else:
-            return redirect('view-profile', pk=pk)
+            return redirect('Accounts:view-profile', pk=pk)
     return render(request, 'index.html')

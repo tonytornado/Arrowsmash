@@ -8,6 +8,7 @@ app_name = "League"
 urlpatterns = [
     path('l/', include([
         path('', views.LeagueViewAll.as_view(), name='league-list'),
+        path('MakeLeague', views.LeagueCreate.as_view(), name='league-add'),
         path('<int:pk>', views.LeagueView.as_view(), name='league-view'),
         path('<int:pk>/league_entry', views.enter_league, name='league-entry')
     ])),

@@ -13,13 +13,19 @@
     {% if league_list.count > 0 %}
         <ul class="list-group">
             {% for league in league_list %}
-        <li class="list-group-item bg-dark"><a
-                href="{% url 'League:league-view' league.pk %}"
-                class="btn btn-block btn-outline-light">{{ league.name }}</a></li>
-    {% endfor %}
-    </ul>
+                <li class="list-group-item bg-dark"><a
+                        href="{% url 'League:league-view' league.pk %}"
+                        class="btn btn-block btn-outline-light">{{ league.name }}</a></li>
+            {% endfor %}
+        </ul>
     {% else %}
-        <h4 class="text-center">No events found.</h4>
+        <div class="text-center">
+            <h4>No events found.</h4></div>
+    {% endif %}
+
+    {% if user.is_staff %}
+        <hr>
+        <a href="{% url 'League:league-add' %}" class="btn btn-primary btn-block">Make a new league</a>
     {% endif %}
 
 {% endblock %}

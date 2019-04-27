@@ -2,12 +2,12 @@
 
 {% load crispy_forms_tags %}
 {% block title %}
-
+    Form
 {% endblock %}
 {% block content %}
-    <form method="post" enctype="multipart/form-data" novalidate>
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% crispy form %}
-        <input type="submit" class="btn btn-block btn-success">
+        <input type="submit" class="btn btn-block btn-success" value="Create League">
     </form>
 {% endblock %}
