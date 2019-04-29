@@ -10,13 +10,26 @@
     {{ trial.title }}
 {% endblock %}
 {% block content %}
-    <ul class="list-group">
-        <li class="list-group-item list-group-item-dark">{{ trial.song1.name }}</li>
-        <li class="list-group-item list-group-item-dark">{{ trial.song2.name }}</li>
-        <li class="list-group-item list-group-item-dark">{{ trial.song3.name }}</li>
-        <li class="list-group-item list-group-item-dark">{{ trial.song4.name }}</li>
-    </ul>
-    <p class="lead text-center">Deadline for scores: {{ trial.deadline|date }}</p>
+    <table class="table table-lg table-bordered bg-dark text-center">
+        <thead class="thead-light">
+        <tr>
+            <th colspan="4">
+                <h3>{{ trial.title }}</h3>
+            </th>
+        </tr>
+        </thead>
+        <tbody class="text-light">
+        <tr>
+            <td>{{ trial.song1.name }}</td>
+            <td>{{ trial.song2.name }}</td>
+            <td>{{ trial.song3.name }}</td>
+            <td>{{ trial.song4.name }}</td>
+        </tr>
+        <tr>
+            <td colspan="4">Deadline for scores: {{ trial.deadline|date }}</td>
+        </tr>
+        </tbody>
+    </table>
     <form action="{% url 'League:trial-entry' trial.pk %}" method="post">
         {% csrf_token %}
         <button class="btn btn-block btn-primary">Accept this trial?</button>

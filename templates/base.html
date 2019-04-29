@@ -89,9 +89,8 @@
 </header>
 {% if messages %}
     {% for message in messages %}
-        <div
-                class="alert fade show alert-dismissable alert-{% if message.tags %}{{ message.tags }}"{% endif %}
-                role="alert">{{ message }}
+        <div class="alert fade show alert-dismissable alert-{% if message.tags %}{{ message.tags }}"{% endif %}
+             role="alert">{{ message }}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                     aria-hidden="true">&times;</span></button>
         </div>

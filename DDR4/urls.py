@@ -8,15 +8,20 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('admin/', admin.site.urls),
-    path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
     path('s/', include('Scores.urls', namespace='Scores')),
     path('l/', include('League.urls', namespace='League')),
-    path('i/', include('Accounts.urls', namespace='Accounts')),
-    path('about/', views.about, name='about'),
-    path('contact/', views.contact, name='contact'),
-    path('contribute/', views.contribute, name='contribute')
+    path('a/', include('Accounts.urls', namespace='Accounts')),
+    path('accounts/', include([
+        path('admin/', admin.site.urls, name="access-panel"),
+        path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
+        path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
+    ])),
+    path('info/', include([
+        path('about', views.about, name='about'),
+        path('contact', views.contact, name='contact'),
+        path('contribute', views.contribute, name='contribute')
+    ])),
+
     # path('feed/', views.FeedSet.as_view(), name='live-feed'),
 ]
 

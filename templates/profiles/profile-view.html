@@ -49,7 +49,6 @@
             </div>
             {% if user.is_authenticated %}
                 {% if user.profile == profile %}
-                    {# Blank space #}
                 {% elif profile.stalked.get not in user.profile.stalker.all %}
                     <div>
                         <form method="post" action="{% url 'Accounts:follow' profile.pk %}">
@@ -92,9 +91,8 @@
                     <tbody>
                     {% for score in profile.score_set.all %}
                         <tr>
-                            <td>
-                                {{ score.date|date }}</td>
-                            <td>{{ score.song.name }} [{{ score.song.difficulty }}]</td>
+                            <td>{{ score.date|date }}</td>
+                            <td>{{ score.song.name }}</td>
                             <td>{{ score.letter_grade }}</td>
                             <td>{{ score.ex }}</td>
                         </tr>
@@ -105,7 +103,6 @@
             </div>
         {% endif %}
         {% if profile.user.league.leagueentry_set %}
-
             <div class="text-center col-sm-6" id="leagues_entered">
                 {% if profile.user.league.leagueentry_set.count > 0 %}
                     <h3 class="border mb-0">Leagues Entered</h3>
@@ -124,13 +121,11 @@
                                     <td>{{ entry.tourney.tourney_date }}</td>
                                 </tr>
                             {% endif %}
-
                         {% endfor %}
                         </tbody>
                     </table>
-
-                {% endif %}</div>
-
+                {% endif %}
+            </div>
         {% endif %}
 
         {% if profile.winner.count > 0 or profile.second_place.count > 0 or profile.third_place.count > 0 %}

@@ -37,6 +37,7 @@ def register(request):
                                        instance=user.profile)  # Reload the profile form with the profile instance
             profile_form.full_clean()
             profile_form.save()  # Gracefully save the form
+            messages.success(request, "You're in. Now open that front door and take the first step.")
             return redirect('login')
     else:
         user_form = UserForm()
@@ -56,7 +57,7 @@ def update_profile(request):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-            messages.success(request, 'Your profile was successfully updated!')
+            messages.success(request, 'Updated profile. Hope you dig the new you.')
             return redirect('home')
         else:
             messages.error(request, 'Please correct the errors below.')
@@ -76,6 +77,7 @@ def follower_add(request, pk):
         follower = request.user.profile
         try:
             FollowManager.follow(follower, followee)
+            messages.success(request, "You're following them now.")
         except Follow.DoesNotExist:
             return False
         else:
@@ -91,6 +93,7 @@ def follower_delete(request, pk):
         follower = request.user.profile
         try:
             FollowManager.remove_follow(follower, followee)
+            messages.success(request, "You're no longer following them.")
         except Follow.DoesNotExist:
             return False
         else:

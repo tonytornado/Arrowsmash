@@ -13,7 +13,7 @@
         <div class="row text-center">
             <div class="col-md mx-auto">
                 <h2 class="border my-0">Latest Scores</h2>
-                <table class="table table-striped table-dark table-bordered" id="latest_scores">
+                <table class="table table-sm table-striped table-dark table-bordered" id="latest_scores">
                     <thead class="thead-light">
                     <tr>
                         <th scope="col">Player</th>
@@ -29,48 +29,16 @@
                             <td>{{ score.song }}</td>
                             <td>{{ score.ex }}</td>
                             <td><a href="{% url 'Scores:score-detail' score.pk %}"
-                                   class="btn btn-primary btn-block">Check</a>
+                                   class="btn btn-sm btn-primary btn-block">Check</a>
                             </td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
             </div>
-
-            {#            {% if user.is_authenticated %}#}
-            {#                <div class="col-md-6">#}
-            {#                    <h2>Top 10 follow Scores</h2>#}
-            {#                    <table class="table table-striped" id="top_ten_scores">#}
-            {#                        <thead class="thead-light">#}
-            {#                        <tr>#}
-            {#                            <th scope="col">Player</th>#}
-            {#                            <th scope="col">Song</th>#}
-            {#                            <th scope="col">Score</th>#}
-            {#                            <th scope="col"></th>#}
-            {#                        </tr>#}
-            {#                        </thead>#}
-            {#                        <tbody class="">#}
-            {#                        {% for score in score_list|slice:":10" %}#}
-            {#                            {% if score.player.user == user.player.stalked %}#}
-            {#                                <tr class="">#}
-            {#                                    <td>{{ score.player.user.username }}</td>#}
-            {#                                    <td>{{ score.song }}</td>#}
-            {#                                    <td>{{ score.ex }}</td>#}
-            {#                                    <td><a href="{% url 'Scores:score-detail' score.pk %}"#}
-            {#                                           class="btn btn-primary btn-block">Check</a>#}
-            {#                                    </td>#}
-            {#                                </tr>#}
-            {#                            {% endif %}#}
-            {##}
-            {#                        {% endfor %}#}
-            {#                        </tbody>#}
-            {#                    </table>#}
-            {#                </div>#}
-            {#            {% endif %}#}
-
             {% if user.is_authenticated %}
                 <div class="col-md-6 mx-auto"><h2 class="border my-0">Your scores</h2>
-                    <table class="table table-striped table-dark table-bordered" id="user_scores">
+                    <table class="table table-sm table-striped table-dark table-bordered" id="user_scores">
                         <thead class="thead-light">
                         <tr>
                             <th scope="col">Song</th>
@@ -85,7 +53,7 @@
                                     <td>{{ score.song }}</td>
                                     <td>{{ score.ex }}</td>
                                     <td><a href="{% url 'Scores:score-detail' score.pk %}"
-                                           class="btn btn-primary btn-block">Check</a>
+                                           class="btn btn-sm btn-primary btn-block">Check</a>
                                     </td>
                                 </tr>
                             {% endif %}
