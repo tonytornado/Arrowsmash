@@ -3,15 +3,21 @@
 {% block title %}
     League Detail - {{ league.name }}
 {% endblock %}
+{% block page-title %}
+    League Detail
+{% endblock %}
+{% block page-sub-title %}
+    {{ League.name }}
+{% endblock %}
 {% block content %}
-    <h2>League Detail</h2>
     <ul class="list-group bg-dark rounded">
         <li class="list-group-item bg-dark"><b>{{ league.name }}</b></li>
-        <li class="list-group-item bg-dark">Location: {{ league.location }}</li>
-        <li class="list-group-item bg-dark">Date: {{ league.competition_date }}</li>
-        <li class="list-group-item bg-dark">Rules: {{ league.rules }}</li>
         <li class="list-group-item bg-dark">
             Organizer: {{ league.organizer.first_name }} {{ league.organizer.last_name }}</li>
+        <li class="list-group-item bg-dark">Location: {{ league.mix }}</li>
+        <li class="list-group-item bg-dark">Date: {{ league.competition_date_start|date }}
+            - {{ league.competition_date_end|date }}</li>
+        <li class="list-group-item bg-dark">Rules: {{ league.rules }}</li>
         {% if league.leagueentry_set.count > 0 %}
             <li class="list-group-item bg-dark">Entrants:
                 {% for foo in league.leagueentry_set.all %}

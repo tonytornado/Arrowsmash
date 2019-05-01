@@ -12,5 +12,9 @@
 {% endblock %}
 
 {% block content %}
-    {% crispy form %}
+    <form method="post" enctype="multipart/form-data" action="{% url "League:league-add" %}">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-block btn-success">Create League</button>
+    </form>
 {% endblock %}
