@@ -17,7 +17,6 @@
       <sourceFolder url="file://$MODULE_DIR$/assets" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/DDR4" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/friendship" />
-      <excludeFolder url="file://$MODULE_DIR$/macvenv" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.7 (Arrowsmash)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
