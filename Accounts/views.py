@@ -5,7 +5,7 @@ from django.db import transaction
 from django.shortcuts import render, redirect
 from django.views import generic
 
-from Accounts.forms import ProfileForm, UserForm, UpdateUserForm, UpdateProfileForm
+from Accounts.forms import ProfileForm, UserForm, UpdateUserForm, UpdateProfileForm, SearchForm
 from Accounts.models import Profile, Follow, FollowManager
 
 
@@ -21,8 +21,30 @@ class ProfileView(generic.DetailView):
 
 class ProfileListing(generic.ListView):
     model = Profile
-    queryset = Profile.objects.all()
     template_name = 'profiles/view-all.html'
+    paginate_by = 20
+    searchstring = ''
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfileListing, self).get_context_data(**kwargs)
+        context['form'] = SearchForm(self.searchstring)
+        from pytz import unicode
+        context['search_request'] = ('searchstring=' + unicode(self.searchstring))
+        return context
+
+    def get(self, request, *args, **kwargs):
+        self.searchstring = request.GET.get('searchstring', '')
+        return super(ProfileListing, self).get(request, *args, **kwargs)
+
+    def get_queryset(self):
+        if not self.searchstring:
+            listing = Profile.objects.all()
+        else:
+            listing = Profile.objects.filter(
+                user__username__contains=self.searchstring
+            )
+
+        return listing.order_by('-id')
 
 
 @transaction.atomic

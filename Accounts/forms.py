@@ -1,10 +1,23 @@
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Row, Column, HTML
+from crispy_forms.layout import Layout, Row, Column, HTML, Field
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 from Accounts.models import Profile
+
+
+class SearchForm(forms.Form):
+    searchstring = forms.CharField(max_length=50, label=False, required=False)
+
+    def __init__(self, searchstring):
+        super(SearchForm, self).__init__()
+        self.fields['searchstring'].initial = searchstring
+        self.helper = FormHelper()
+        self.helper.form_tag = False
+        self.helper.layout = Layout(
+            Field('searchstring', css_class='form-control text-center', placeholder='Search (Press [Enter] to search)'),
+        )
 
 
 class UserForm(UserCreationForm):

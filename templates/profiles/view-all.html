@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block title %}
     Players
 {% endblock %}
@@ -10,15 +12,36 @@
     You may want to ctrl + f here.
 {% endblock %}
 {% block content %}
+    <form>
+        {% crispy form %}
+    </form>
+    <hr/>
     <div>
-        <ul class="list-group">
-            {% for profile in profile_list %}
-                <li class="list-group-item">
-                    <a href="{% url 'Accounts:view-profile' profile.pk %}" class="btn btn-block"
-                       title="{{ profile.tagline }}">{{ profile.user.username }} {% if profile.tagline %}
-                        - "{{ profile.tagline }}"{% endif %}</a>
-                </li>
-            {% endfor %}
-        </ul>
+        {% if profile_list %}
+            <ul class="list-group">
+                {% for profile in profile_list %}
+                    <li class="list-group-item">
+                        <a href="{% url 'Accounts:view-profile' profile.pk %}" class="btn btn-block"
+                           title="{{ profile.tagline }}">{{ profile.user.username }} {% if profile.tagline %}
+                            - "{{ profile.tagline }}"{% endif %}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+            {% if is_paginated %}
+                <div class="paginator">
+                <span class="page-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?{{ search_request }}&page={{ page_obj.previous_page_number }}">previous</a>
+                    {% endif %}
+                    <span class="page-current">{{ page_obj.number }}/{{ page_obj.has_other_pages }}</span>
+                    {% if page_obj.has_next %}
+                        <a href="?{{ search_request }}&page={{ page_obj.next_page_number }}">next</a>
+                    {% endif %}
+                </span>
+                </div>
+            {% endif %}
+        {% else %}
+            No one found. Try again.
+        {% endif %}
     </div>
 {% endblock %}
