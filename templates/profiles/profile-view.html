@@ -11,56 +11,65 @@
 {% block page-sub-title %}
     <p class="text-right border-top bg-primary p-1">
         <small>{{ profile.age }} | {{ profile.get_gender_display }}
-            | {{ profile.score_set.count }}
-            score{{ profile.score_set.count|pluralize }} </small>
+            | {{ profile.score_set.count }} score{{ profile.score_set.count|pluralize }} </small>
     </p>
 {% endblock %}
 
 {% block content %}
-    <section class="row mx-auto">
+    <section class="row mx-auto py-4 border rounded bg-secondary">
         <div class="col-sm-4 d-flex align-items-center" id="avatar_container">
-            <img src="{{ profile.avatar.url }}" alt="AVATAR" class="img-thumbnail img-circle-avatar" height="100"
-                 width="100">
+            <img src="{{ profile.avatar.url }}" alt="AVATAR" class="img-thumbnail img-circle-avatar shadow">
         </div>
         <div class="col-sm-8" id="information_container">
-            <div>
-                <ul class="list-group">
-                    {% if profile.user.get_full_name %}
-                        <li class="list-group-item bg-dark d-flex justify-content-between align-items-center">
-                            Name: {{ profile.user.get_full_name }}
-                        </li>{% endif %}
-                    {% if profile.city or profile.state %}
-                        <li class="list-group-item bg-dark d-flex justify-content-between
-                        align-items-center">Location: {{ profile.city }}, {{ profile.state }}</li>{% endif %}
-                    {% if profile.tagline %}
-                        <li class="list-group-item bg-dark d-flex justify-content-between align-items-center">
-                            "{{ profile.tagline }}"
-                        </li>{% endif %}
-                    {% if profile.rival_code %}
-                        <li class="list-group-item bg-dark d-flex justify-content-between align-items-center">Rival
-                            Code: {{ profile.rival_code }}</li>{% endif %}
-                    {% if profile.stalked.count > 0 %}
-                        <li class="list-group-item bg-dark d-flex justify-content-between align-items-center">
-                            {{ profile.stalked.count }} follower{{ profile.stalked.count|pluralize }}
-                        </li>
-                    {% endif %}
-                </ul>
-                <br/>
-            </div>
+            <table class="table table-sm table-dark shadow-lg">
+                <thead class="thead-light text-center">
+                <th colspan="2"><b>Personal Stats</b></th>
+                </thead>
+                <tbody>
+                {% if profile.user.first_name and profile.user.last_name %}
+                    <tr>
+                        <td>Name</td>
+                        <td>{{ profile.user.get_full_name }}</td>
+                    </tr>{% endif %}
+                {% if profile.city and profile.state %}
+                    <tr>
+                        <td>Location</td>
+                        <td>{{ profile.city }}, {{ profile.state }}</td>
+                    </tr>
+                {% endif %}
+                {% if profile.rival_code %}
+                    <tr>
+                        <td>Rival Code</td>
+                        <td>{{ profile.rival_code }}</td>
+                    </tr>
+                {% endif %}
+                {% if profile.tagline %}
+                    <tr>
+                        <td colspan="2" class="text-center">"{{ profile.tagline }}"</td>
+                    </tr>
+                {% endif %}
+                {% if profile.stalked.count > 0 %}
+                    <tr>
+                        <td colspan="2" class="text-center">{{ profile.stalked.count }}
+                            follower{{ profile.stalked.count|pluralize }}</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
             {% if user.is_authenticated %}
                 {% if user.profile == profile %}
                 {% elif profile.stalked.get not in user.profile.stalker.all %}
                     <div>
                         <form method="post" action="{% url 'Accounts:follow' profile.pk %}">
                             {% csrf_token %}
-                            <button class="btn btn-outline-primary btn-block">Follow them</button>
+                            <button class="btn btn-dark btn-block">Follow them</button>
                         </form>
                     </div>
                 {% else %}
                     <div>
                         <form method="post" action="{% url 'Accounts:unfollow' profile.pk %}">
                             {% csrf_token %}
-                            <button class="btn btn-outline-danger btn-block">Unfollow them</button>
+                            <button class="btn btn-outline-dark btn-block">Unfollow them</button>
                         </form>
                     </div>
                 {% endif %}
@@ -114,11 +123,11 @@
                         </thead>
                         <tbody>
                         {% for entry in profile.user.league.leagueentry_set.all %}
-                            {% if entry.tourney.deadline %}
+                            {% if entry.trial.deadline %}
                             {% else %}
                                 <tr>
-                                    <td>{{ entry.tourney.name }}</td>
-                                    <td>{{ entry.tourney.tourney_date }}</td>
+                                    <td>{{ entry.trial.name }}</td>
+                                    <td>{{ entry.trial.tourney_date }}</td>
                                 </tr>
                             {% endif %}
                         {% endfor %}

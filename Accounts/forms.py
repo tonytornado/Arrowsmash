@@ -8,15 +8,17 @@ from Accounts.models import Profile
 
 
 class SearchForm(forms.Form):
-    searchstring = forms.CharField(max_length=50, label=False, required=False)
+    SearchString = forms.CharField(max_length=50, label=False, required=False)
 
-    def __init__(self, searchstring):
+    def __init__(self, SearchString):
         super(SearchForm, self).__init__()
-        self.fields['searchstring'].initial = searchstring
+        self.fields['SearchString'].initial = SearchString
         self.helper = FormHelper()
         self.helper.form_tag = False
         self.helper.layout = Layout(
-            Field('searchstring', css_class='form-control text-center', placeholder='Search (Press [Enter] to search)'),
+            Field('SearchString',
+                  css_class='form-control form-control-lg text-center',
+                  placeholder='Search players (Press [Enter] to initiate search)'),
         )
 
 

@@ -77,6 +77,12 @@ class FollowManager(models.Manager):
 
     @staticmethod
     def follow(follower, followee):
+        """
+        Follow someone
+        :param follower: That's you!
+        :param followee: That's who you want to follow.
+        :return:
+        """
         if follower == followee:
             raise ValidationError("You can't follow yourself... seriously.")
 
@@ -90,6 +96,12 @@ class FollowManager(models.Manager):
 
     @staticmethod
     def remove_follow(follower, followee):
+        """
+        Removes a follow, obviously
+        :param follower:
+        :param followee:
+        :return:
+        """
         if follower == followee:
             raise ValidationError("You can't unfollow yourself... why?")
 

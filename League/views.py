@@ -44,6 +44,7 @@ class TrialView(generic.DetailView):
 
 class TrialCreate(generic.CreateView):
     model = Trial
+    success_url = reverse_lazy("League:trial-view")
 
 
 @login_required

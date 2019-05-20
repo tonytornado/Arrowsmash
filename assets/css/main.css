@@ -20,7 +20,7 @@ nav {
 }
 
 .img-circle-avatar {
-    border-radius: 50%;
+    border-radius: 10%;
     height: 300px;
     width: 300px;
 }

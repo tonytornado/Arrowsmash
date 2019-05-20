@@ -1,3 +1,4 @@
+import pytz
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
@@ -23,25 +24,24 @@ class ProfileListing(generic.ListView):
     model = Profile
     template_name = 'profiles/view-all.html'
     paginate_by = 20
-    searchstring = ''
+    SearchString = ''
 
     def get_context_data(self, **kwargs):
         context = super(ProfileListing, self).get_context_data(**kwargs)
-        context['form'] = SearchForm(self.searchstring)
-        from pytz import unicode
-        context['search_request'] = ('searchstring=' + unicode(self.searchstring))
+        context['form'] = SearchForm(self.SearchString)
+        context['search_request'] = ('SearchString=' + pytz.unicode(self.SearchString))
         return context
 
     def get(self, request, *args, **kwargs):
-        self.searchstring = request.GET.get('searchstring', '')
+        self.SearchString = request.GET.get('SearchString', '')
         return super(ProfileListing, self).get(request, *args, **kwargs)
 
     def get_queryset(self):
-        if not self.searchstring:
+        if not self.SearchString:
             listing = Profile.objects.all()
         else:
             listing = Profile.objects.filter(
-                user__username__contains=self.searchstring
+                user__username__contains=self.SearchString
             )
 
         return listing.order_by('-id')
@@ -49,6 +49,11 @@ class ProfileListing(generic.ListView):
 
 @transaction.atomic
 def register(request):
+    """
+    Registers a new user
+    :param request:
+    :return:
+    """
     if request.method == 'POST':
         user_form = UserForm(request.POST)
         profile_form = ProfileForm(request.POST, request.FILES)
@@ -73,6 +78,11 @@ def register(request):
 @login_required
 @transaction.atomic
 def update_profile(request):
+    """
+    Updates a profile.
+    :param request:
+    :return:
+    """
     if request.method == 'POST':
         user_form = UpdateUserForm(request.POST, instance=request.user)
         profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
@@ -94,6 +104,12 @@ def update_profile(request):
 
 @login_required
 def follower_add(request, pk):
+    """
+    Adds a followee
+    :param request:
+    :param pk: The user's PK
+    :return:
+    """
     if request.method == 'POST':
         followee = Profile.objects.get(pk=pk)
         follower = request.user.profile
@@ -110,6 +126,12 @@ def follower_add(request, pk):
 
 @login_required
 def follower_delete(request, pk):
+    """
+    Removes a followee
+    :param request:
+    :param pk:
+    :return:
+    """
     if request.method == 'POST':
         followee = Profile.objects.get(pk=pk)
         follower = request.user.profile

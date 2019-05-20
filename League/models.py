@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 from typing import Tuple
 
 from django.contrib.auth.models import User
@@ -38,35 +38,37 @@ class LeagueManager(models.Manager):
 
 class League(models.Model):
     """Model for the Leagues"""
-    name = models.CharField(max_length=100)
-    organizer = models.OneToOneField(User, on_delete=models.CASCADE)
-    mix = models.OneToOneField(Mix, on_delete=models.CASCADE)
-    rules = models.TextField(max_length=10000, help_text="Detail all of the rules of your League here.")
-    competition_date_start = models.DateField(default=datetime.now)
-    competition_date_end = models.DateField(default=datetime.now)
+    name: str = models.CharField(max_length=100)
+    organizer: User = models.OneToOneField(User, on_delete=models.CASCADE)
+    mix: Mix = models.OneToOneField(Mix, on_delete=models.CASCADE)
+    rules: str = models.TextField(max_length=10000, help_text="Detail all of the rules of your League here.")
+    competition_date_start: date = models.DateField(default=datetime.now)
+    competition_date_end: date = models.DateField(default=datetime.now)
 
+    @property
     def __str__(self):
         return f"{self.name}, {self.competition_date_start} - {self.competition_date_end}"
 
 
 class LeagueResult(models.Model):
-    """Model for league results"""
-    league = models.ForeignKey(League, models.CASCADE)
-    winner = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, related_name='winner')
-    second = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, related_name='second_place')
-    third = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, related_name='third_place')
+    """Model for league results display"""
+    league: League = models.ForeignKey(League, models.CASCADE)
+    winner: Profile = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, related_name='winner')
+    second: Profile = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, related_name='second_place')
+    third: Profile = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, related_name='third_place')
 
+    @property
     def __str__(self):
         return f"{self.league.name}"
 
 
 class LeagueEntry(models.Model):
     """Model for league entry results"""
-    league = models.ForeignKey(League, models.CASCADE)
-    entrants = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, related_name='entrant')
-    division = models.CharField(choices=DIVISION_CHOICES, max_length=1)
+    league: League = models.ForeignKey(League, models.CASCADE)
+    entrants: Profile = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, related_name='entrant')
+    division: str = models.CharField(choices=DIVISION_CHOICES, max_length=1)
 
-    federation = LeagueManager()
+    federation: LeagueManager = LeagueManager()
 
 
 class TrialManager(models.Manager):

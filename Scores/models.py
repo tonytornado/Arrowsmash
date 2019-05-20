@@ -5,6 +5,12 @@ from Accounts.models import Profile
 
 
 def user_directory_path(instance, filename):
+    """
+    Defines the filepath of the user directory
+    :param instance:
+    :param filename:
+    :return:
+    """
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
     return f'images/user_{instance.player.id}/proof_{filename}'
 
@@ -15,10 +21,14 @@ class Mix(models.Model):
 
     @staticmethod
     def song_count():
+        """
+        Returns the song count
+        :return:
+        """
         return Song.objects.count()
 
     def __str__(self):
-        return "{} - {}".format(self.name, self.year)
+        return f"{self.name} [{self.year}]"
 
 
 class Song(models.Model):
@@ -58,6 +68,10 @@ class Song(models.Model):
         return f"{self.name}"
 
     def bpm(self):
+        """
+        Returns minimum and maximum BPM
+        :return:
+        """
         if self.min_bpm == self.max_bpm:
             return f"{self.min_bpm}"
         else:
@@ -110,6 +124,10 @@ class Score(models.Model):
 
     @property
     def ex_check(self):
+        """
+        Checks the EX score of a song to validate the score having correct steps/jumps/shocks
+        :return:
+        """
         tip = self.difficulty
         steps = Score.song_list(self, tip)
 

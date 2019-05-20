@@ -9,10 +9,10 @@
     All Players
 {% endblock %}
 {% block page-sub-title %}
-    You may want to ctrl + f here.
+    You'll probably need to hit that search box.
 {% endblock %}
 {% block content %}
-    <form>
+    <form method="get">
         {% crispy form %}
     </form>
     <hr/>
@@ -22,8 +22,8 @@
                 {% for profile in profile_list %}
                     <li class="list-group-item">
                         <a href="{% url 'Accounts:view-profile' profile.pk %}" class="btn btn-block"
-                           title="{{ profile.tagline }}">{{ profile.user.username }} {% if profile.tagline %}
-                            - "{{ profile.tagline }}"{% endif %}</a>
+                           title="{{ profile.tagline }}">{{ profile.user.username }} {% if profile.stalked %}
+                            - {{ profile.stalked.count }} follower{{ profile.stalked.count|pluralize }} {% endif %}</a>
                     </li>
                 {% endfor %}
             </ul>
