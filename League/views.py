@@ -26,6 +26,11 @@ class LeagueCreate(generic.CreateView):
     fields = ('name', 'organizer', 'mix', 'rules', 'competition_date_start', 'competition_date_end')
 
     def form_valid(self, form):
+        """
+        Checks validation of the form
+        :param form:
+        :return:
+        """
         # form.instance.player = self.request.user.profile
         return super().form_valid(form)
 
