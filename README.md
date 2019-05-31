@@ -8,6 +8,7 @@ What am I generally working to accomplish here?
 * Basic score tracking with a leader board system.
 * Social network features such as post feeds and followers
 * Support for leagues and league events
+* Analytics!
 
 
  
