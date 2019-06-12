@@ -7,38 +7,58 @@
     League Detail
 {% endblock %}
 {% block page-sub-title %}
-    {{ League.name }}
+    {{ league.name }}
 {% endblock %}
 {% block content %}
-    <ul class="list-group bg-dark rounded">
-        <li class="list-group-item bg-dark"><h2>{{ league.name }}</h2></li>
-        <li class="list-group-item bg-dark">
-            <span class="lead">Organizer:</span> {{ league.organizer.first_name }} {{ league.organizer.last_name }}</li>
-        <li class="list-group-item bg-dark"><span class="lead">Location:</span> {{ league.mix }}</li>
-        <li class="list-group-item bg-dark"><span class="lead">Date:</span> {{ league.competition_date_start|date }}
-            - {{ league.competition_date_end|date }}</li>
-        <li class="list-group-item bg-dark"><span class="lead">Rules:</span> {{ league.rules }}</li>
-        {% if league.leagueentry_set.count > 0 %}
-            <li class="list-group-item bg-dark"><span class="lead">Entrants:</span>
+    <table class="table table-bordered table-dark">
+        <thead class="thead-light">
+        <tr>
+            <th colspan="2">
+                League Data
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><b>Organizer</b></td>
+            <td>{{ league.organizer.get_full_name }} [{{ league.organizer.username }}]</td>
+        </tr>
+        <tr>
+            <td><b>Location</b></td>
+            <td>{{ league.mix }}</td>
+        </tr>
+        <tr>
+            <td><b>Length</b></td>
+            <td>{{ league.competition_date_start }} - {{ league.competition_date_end }}</td>
+        </tr>
+        <tr>
+            <td><b>Rules</b></td>
+            <td>{{ league.rules }}</td>
+        </tr>
+        <tr>
+            <td><b>Entrants</b></td>
+            <td>{% if league.leagueentry_set.count > 0 %}
                 {% for foo in league.leagueentry_set.all %}
                     {{ foo.entrants.user.username }}<br/>
                 {% endfor %}
-            </li>
-        {% endif %}
-        {% if user.is_authenticated %}
-            {% if league.organizer != user %}
-                {% if user not in league.leagueentry_set.get.all %}
-                    <li class="list-group-item bg-dark">
-                        <form method="post" action="{% url 'League:league-entry' league.pk %}">
-                            {% csrf_token %}
-                            <h5>Enter this league?</h5>
-                            <div class="btn btn-group">
-                                <button class="btn btn-block btn-primary">Join League</button>
-                            </div>
-                        </form>
-                    </li>
-                {% endif %}
+            {% else %}
+                None
+            {% endif %}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    {% if user.is_authenticated %}
+        {% if league.organizer != user %}
+            {% if user not in league.leagueentry_set.get.all %}
+                <form method="post" action="{% url 'League:league-entry' league.pk %}">
+                    {% csrf_token %}
+                    <h5>Enter this league?</h5>
+                    <div class="btn btn-group">
+                        <button class="btn btn-block btn-primary">Join League</button>
+                    </div>
+                </form>
             {% endif %}
         {% endif %}
-    </ul>
+    {% endif %}
 {% endblock %}

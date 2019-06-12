@@ -17,29 +17,32 @@
 
 {% block content %}
     <section class="row mx-auto py-4 border rounded bg-secondary">
-        <div class="col-sm-4 d-flex align-items-center" id="avatar_container">
-            <img src="{{ profile.avatar.url }}" alt="AVATAR" class="img-thumbnail img-circle-avatar shadow">
+        <div class="col-sm-4" id="avatar_container">
+            <img src="{{ profile.avatar.url }}" alt="AVATAR" class="img-thumbnail img-circle-avatar text-center shadow">
+            <br/>
         </div>
         <div class="col-sm-8" id="information_container">
-            <table class="table table-sm table-dark shadow-lg">
+            <table class="table table-sm table-dark shadow-lg table-bordered">
                 <thead class="thead-light text-center">
-                <th colspan="2"><b>Personal Stats</b></th>
+                <tr>
+                    <th colspan="2"><b>Personal Stats</b></th>
+                </tr>
                 </thead>
                 <tbody>
                 {% if profile.user.first_name and profile.user.last_name %}
                     <tr>
-                        <td>Name</td>
+                        <td><b>Name</b></td>
                         <td>{{ profile.user.get_full_name }}</td>
                     </tr>{% endif %}
                 {% if profile.city and profile.state %}
                     <tr>
-                        <td>Location</td>
+                        <td><b>Location</b></td>
                         <td>{{ profile.city }}, {{ profile.state }}</td>
                     </tr>
                 {% endif %}
                 {% if profile.rival_code %}
                     <tr>
-                        <td>Rival Code</td>
+                        <td><b>Rival Code</b></td>
                         <td>{{ profile.rival_code }}</td>
                     </tr>
                 {% endif %}

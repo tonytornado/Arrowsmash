@@ -21,6 +21,9 @@ nav {
 
 .img-circle-avatar {
     border-radius: 10%;
-    height: 300px;
-    width: 300px;
+    vertical-align: middle;
+    display: block;
+    width: 350px;
+    height: 350px;
+    margin: auto;
 }

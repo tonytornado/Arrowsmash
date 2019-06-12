@@ -100,7 +100,12 @@ class Trial(models.Model):
     def __str__(self):
         return f"{self.title} - {self.deadline}"
 
+    @property
     def trial_list(self):
+        """
+        Returns a list name for the trials.
+        :return:
+        """
         return f"{self.song1.name}, {self.song2.name}, {self.song3.name}, {self.song4.name}"
 
 
