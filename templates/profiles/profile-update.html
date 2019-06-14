@@ -12,11 +12,11 @@
     Change it up!
 {% endblock %}
 {% block content %}
-    <h2 class="text-center">Basic Information</h2>
+    <h2 class="text-center border rounded">Basic Information</h2>
     <form method="post" action="{% url 'Accounts:update-profile' %}" enctype="multipart/form-data" novalidate>
         {% crispy user_form %}
         <hr/>
-        <h2 class="text-center">Additional information</h2>
+        <h2 class="text-center border rounded">Additional information</h2>
         {% crispy profile_form %}
         <hr/>
         <button type="submit" class="btn btn-primary btn-block">Edit</button>
