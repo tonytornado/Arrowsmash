@@ -1,9 +1,9 @@
 backports.csv==1.0.7
 defusedxml==0.6.0
 diff-match-patch==20181111
-Django
-django-crispy-forms==1.7.2
-django-import-export==1.2.0
+django
+django-crispy-forms
+django-import-export
 et-xmlfile==1.0.1
 jdcal==1.4.1
 odfpy==1.4.0
@@ -19,3 +19,4 @@ numpy
 scipy
 ipython
 pandas
+django-rest-framework

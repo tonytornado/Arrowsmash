@@ -4,6 +4,58 @@ from django.urls import reverse
 from Accounts.models import Profile
 
 
+class ChartDifficulty(models.Model):
+    difficulty: str = models.CharField(max_length=5)
+    step: str = models.CharField(max_length=5)
+    shock: str = models.CharField(max_length=5)
+    freeze: str = models.CharField(max_length=5)
+
+
+class ChartLevel(models.Model):
+    beginner: ChartDifficulty = models.ForeignKey(ChartDifficulty,
+                                                  models.CASCADE,
+                                                  related_name="beginner",
+                                                  null=True
+                                                  )
+    basic: ChartDifficulty = models.ForeignKey(ChartDifficulty,
+                                               models.CASCADE,
+                                               related_name="basic",
+                                               null=True
+                                               )
+    difficult: ChartDifficulty = models.ForeignKey(ChartDifficulty,
+                                                   models.CASCADE,
+                                                   related_name="difficult",
+                                                   null=True
+                                                   )
+    expert: ChartDifficulty = models.ForeignKey(ChartDifficulty,
+                                                models.CASCADE,
+                                                related_name="expert",
+                                                null=True
+                                                )
+    challenge: ChartDifficulty = models.ForeignKey(ChartDifficulty,
+                                                   models.CASCADE,
+                                                   related_name="challenge",
+                                                   null=True
+                                                   )
+
+
+class SongChart(models.Model):
+    unlock: bool = models.BooleanField(default=False, null=True)
+    us_locked: bool = models.BooleanField(default=False, null=True)
+    name: str = models.CharField(max_length=100)
+    artist: str = models.CharField(max_length=100)
+    folder: str = models.CharField(max_length=80, blank=True)
+    bpm: str = models.CharField(max_length=20)
+    name_translation: str = models.CharField(max_length=100, blank=True)
+    artist_translation: str = models.CharField(max_length=100, blank=True)
+    genre: str = models.CharField(max_length=50, blank=True)
+    single: ChartLevel = models.ForeignKey(ChartLevel, models.CASCADE, related_name="single")
+    double: ChartLevel = models.ForeignKey(ChartLevel, models.CASCADE, related_name="double")
+
+    def __str__(self):
+        return f"{self.name}"
+
+
 def user_directory_path(instance, filename):
     """
     Defines the filepath of the user directory
@@ -13,69 +65,6 @@ def user_directory_path(instance, filename):
     """
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
     return f'images/user_{instance.player.id}/proof_{filename}'
-
-
-class Mix(models.Model):
-    name = models.CharField(max_length=150)
-    year = models.IntegerField()
-
-    @staticmethod
-    def song_count():
-        """
-        Returns the song count
-        :return:
-        """
-        return Song.objects.count()
-
-    def __str__(self):
-        return f"{self.name} [{self.year}]"
-
-
-class Song(models.Model):
-    name = models.CharField(max_length=100)
-    artist = models.CharField(max_length=100)
-    min_bpm = models.IntegerField()
-    max_bpm = models.IntegerField(null=True)
-    beg = models.IntegerField(null=True)
-    bsp = models.IntegerField(null=True)
-    dsp = models.IntegerField(null=True)
-    esp = models.IntegerField(null=True)
-    csp = models.IntegerField(null=True)
-    bdp = models.IntegerField(null=True)
-    ddp = models.IntegerField(null=True)
-    edp = models.IntegerField(null=True)
-    cdp = models.IntegerField(null=True)
-    beg_steps = models.IntegerField(default=0)
-    bsp_steps = models.IntegerField(default=0)
-    dsp_steps = models.IntegerField(default=0)
-    esp_steps = models.IntegerField(default=0)
-    csp_steps = models.IntegerField(default=0)
-    bdp_steps = models.IntegerField(default=0)
-    ddp_steps = models.IntegerField(default=0)
-    edp_steps = models.IntegerField(default=0)
-    cdp_steps = models.IntegerField(default=0)
-    beg_holds = models.IntegerField(default=0)
-    bsp_holds = models.IntegerField(default=0)
-    dsp_holds = models.IntegerField(default=0)
-    esp_holds = models.IntegerField(default=0)
-    csp_holds = models.IntegerField(default=0)
-    bdp_holds = models.IntegerField(default=0)
-    ddp_holds = models.IntegerField(default=0)
-    edp_holds = models.IntegerField(default=0)
-    cdp_holds = models.IntegerField(default=0)
-
-    def __str__(self):
-        return f"{self.name}"
-
-    def bpm(self):
-        """
-        Returns minimum and maximum BPM
-        :return:
-        """
-        if self.min_bpm == self.max_bpm:
-            return f"{self.min_bpm}"
-        else:
-            return f"{self.min_bpm} - {self.max_bpm}"
 
 
 DIFFICULTY_SELECT = (
@@ -91,8 +80,8 @@ DIFFICULTY_SELECT = (
 
 
 class Score(models.Model):
-    song = models.ForeignKey(Song, models.CASCADE)
-    player = models.ForeignKey(Profile, models.CASCADE)
+    song = models.ForeignKey(SongChart, models.CASCADE, related_name='song')
+    player = models.ForeignKey(Profile, models.CASCADE, related_name='player')
     difficulty = models.CharField(choices=DIFFICULTY_SELECT, default=1, max_length=1)
     marvelous = models.IntegerField()
     perfect = models.IntegerField()
@@ -110,15 +99,15 @@ class Score(models.Model):
         :return:
         """
         song_type = {
-            "BEG": self.song.beg_steps + self.song.beg_holds,
-            "BSP": self.song.bsp_steps + self.song.bsp_holds,
-            "DSP": self.song.dsp_steps + self.song.dsp_holds,
-            "ESP": self.song.esp_steps + self.song.esp_holds,
-            "CSP": self.song.csp_steps + self.song.csp_holds,
-            "BDP": self.song.bdp_steps + self.song.bdp_holds,
-            "DDP": self.song.ddp_steps + self.song.ddp_holds,
-            "EDP": self.song.edp_steps + self.song.edp_holds,
-            "CDP": self.song.cdp_steps + self.song.cdp_holds
+            "BEG": self.song.single.beginner.step + self.song.single.beginner.freeze,
+            "BSP": self.song.single.basic.step + self.song.single.basic.freeze,
+            "DSP": self.song.single.difficult.step + self.song.single.difficult.freeze,
+            "ESP": self.song.single.expert.step + self.song.single.expert.freeze,
+            "CSP": self.song.single.challenge.step + self.song.single.challenge.freeze,
+            "BDP": self.song.double.basic.step + self.song.double.basic.freeze,
+            "DDP": self.song.double.difficult.step + self.song.double.difficult.freeze,
+            "EDP": self.song.double.expert.step + self.song.double.expert.freeze,
+            "CDP": self.song.double.challenge.step + self.song.double.challenge.freeze,
         }
         return song_type.get(argument, 0)
 
@@ -132,10 +121,7 @@ class Score(models.Model):
         steps = Score.song_list(self, tip)
 
         num_steps = (self.marvelous + self.perfect + self.great + self.good + self.OK + self.miss)
-        if num_steps == steps:
-            return True
-        else:
-            return False
+        return True if num_steps == steps else False
 
     @property
     def ex(self):

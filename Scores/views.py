@@ -1,8 +1,10 @@
 from django.urls import reverse_lazy
 from django.views import generic
+from rest_framework import generics
 
 from Scores.forms import ScoreForm
-from Scores.models import Score, Song
+from Scores.models import Score, SongChart
+from Scores.serializers import SongChartSerializer
 
 
 class ScoreListing(generic.ListView):
@@ -30,6 +32,11 @@ class ScoreSubmit(generic.CreateView):
 
 
 class SongDB(generic.ListView):
-    model = Song
-    queryset = Song.objects.all()
-    template_name = "scores/song_db.html"
+    model = SongChart
+    queryset = SongChart.objects.all()
+    template_name = "scores/score-song-list.html"
+
+
+class JSONView(generics.ListAPIView):
+    queryset = SongChart.objects.all()
+    serializer_class = SongChartSerializer

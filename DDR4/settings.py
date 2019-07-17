@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'Scores.apps.ScoresConfig',
     'League.apps.TourneyConfig',
     'crispy_forms',
-    'import_export'
+    'import_export',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [

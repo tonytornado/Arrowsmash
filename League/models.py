@@ -6,7 +6,7 @@ from django.db import models
 from django.db.models.fields.files import ImageFieldFile
 
 from Accounts.models import Profile
-from Scores.models import Mix, Song
+from Scores.models import SongChart
 
 DIVISION_CHOICES = [
     ('M', 'Master'),
@@ -40,7 +40,6 @@ class League(models.Model):
     """Model for the Leagues"""
     name: str = models.CharField(max_length=100)
     organizer: User = models.OneToOneField(User, on_delete=models.CASCADE)
-    mix: Mix = models.OneToOneField(Mix, on_delete=models.CASCADE)
     rules: str = models.TextField(max_length=10000, help_text="Detail all of the rules of your League here.")
     competition_date_start: date = models.DateField(default=datetime.now)
     competition_date_end: date = models.DateField(default=datetime.now)
@@ -91,10 +90,10 @@ class Trial(models.Model):
     title: str = models.CharField(max_length=100)
     deadline: datetime = models.DateTimeField()
     division: str = models.CharField(choices=DIVISION_CHOICES, max_length=1)
-    song1: Song = models.ForeignKey(Song, models.CASCADE, related_name="first_song")
-    song2: Song = models.ForeignKey(Song, models.CASCADE, related_name="second_song")
-    song3: Song = models.ForeignKey(Song, models.CASCADE, related_name="third_song")
-    song4: Song = models.ForeignKey(Song, models.CASCADE, related_name="final_song")
+    song1: SongChart = models.ForeignKey(SongChart, models.CASCADE, related_name="first_song")
+    song2: SongChart = models.ForeignKey(SongChart, models.CASCADE, related_name="second_song")
+    song3: SongChart = models.ForeignKey(SongChart, models.CASCADE, related_name="third_song")
+    song4: SongChart = models.ForeignKey(SongChart, models.CASCADE, related_name="final_song")
     art: ImageFieldFile = models.ImageField(null=True, blank=True, upload_to='images/trial_art')
 
     def __str__(self):
