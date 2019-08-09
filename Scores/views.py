@@ -22,6 +22,7 @@ class ScoreDetail(generic.DetailView):
 class ScoreSubmit(generic.CreateView):
     model = Score
     form_class = ScoreForm
+    queryset = Score.objects.order_by('song__name').all()
     template_name = "scores/score-submit.html"
     success_url = reverse_lazy('Scores:score-list')
     success_message = "Score submitted!"
@@ -38,5 +39,10 @@ class SongDB(generic.ListView):
 
 
 class JSONView(generics.ListAPIView):
+    queryset = SongChart.objects.all()
+    serializer_class = SongChartSerializer
+
+
+class JSONDetailView(generics.RetrieveAPIView):
     queryset = SongChart.objects.all()
     serializer_class = SongChartSerializer

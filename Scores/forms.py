@@ -27,9 +27,9 @@ class ScoreForm(forms.ModelForm):
                 Column('miss', css_class='form-group col-md-2'),
             ),
             Row(
-                Column('song', css_class='form-group col-md-10'),
+                Column('song', css_class='form-group col-md-10', css_id='song_title'),
                 Column('difficulty', css_class='form-group col-md-2'),
             ),
             'proof',
-            Submit('Submit', 'Submit', css_class='btn btn-block btn-outline-light'),
+            Submit('Submit', 'Send Up', css_class='btn btn-block btn-outline-light'),
         )

@@ -10,8 +10,9 @@ urlpatterns = [
     path('', views.ScoreListing.as_view(), name='score-list'),
     path('detail/<int:pk>', views.ScoreDetail.as_view(), name='score-detail'),
     path('submit', views.ScoreSubmit.as_view(), name='score-submit'),
-    # path('jsonpretty/', views.JSONView.as_view(), name='json-pretty'),
-    # path('songDB/', views.SongDB.as_view(), name='dbview'),
+    path('jsonpretty/', views.JSONView.as_view(), name='json-pretty'),
+    path('jsonpretty/<int:pk>', views.JSONDetailView.as_view(), name='json-detail-pretty'),
+    path('songDB/', views.SongDB.as_view(), name='dbview'),
 ]
 
 if settings.DEBUG:

@@ -55,7 +55,11 @@
                 <tbody>
                 {% if score.full_combo %}
                     <tr>
-                        {% if score.ex_check is False %}
+                        {% if score.full_score is None %}
+                            <td colspan="2" class="text-danger">We believe this score is incorrect, possibly fake.
+                                Please check your numbers because that seems impossible.
+                            </td>
+                        {% elif score.ex_check is False %}
                             <td colspan="2" class="text-danger">UNDER REVIEW</td>
                         {% else %}
                             <td colspan="2">{{ score.full_combo }}</td>

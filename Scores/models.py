@@ -76,6 +76,7 @@ DIFFICULTY_SELECT = (
     ("6", "BDP"),
     ("7", "DDP"),
     ("8", "EDP"),
+    ("9", "CDP"),
 )
 
 
@@ -99,15 +100,28 @@ class Score(models.Model):
         :return:
         """
         song_type = {
-            "BEG": self.song.single.beginner.step + self.song.single.beginner.freeze,
-            "BSP": self.song.single.basic.step + self.song.single.basic.freeze,
-            "DSP": self.song.single.difficult.step + self.song.single.difficult.freeze,
-            "ESP": self.song.single.expert.step + self.song.single.expert.freeze,
-            "CSP": self.song.single.challenge.step + self.song.single.challenge.freeze,
-            "BDP": self.song.double.basic.step + self.song.double.basic.freeze,
-            "DDP": self.song.double.difficult.step + self.song.double.difficult.freeze,
-            "EDP": self.song.double.expert.step + self.song.double.expert.freeze,
-            "CDP": self.song.double.challenge.step + self.song.double.challenge.freeze,
+            "BEG": (self.song.single.beginner.step + self.song.single.beginner.freeze) if self.song.single.beginner
+            else 0,
+            "BSP": (self.song.single.basic.step + self.song.single.basic.freeze) if self.song.single.basic
+            else 0,
+            "DSP": (self.song.single.difficult.step + self.song.single.difficult.freeze) if
+            self.song.single.expert
+            else 0,
+            "ESP": (self.song.single.expert.step + self.song.single.expert.freeze) if self.song.single.expert
+            else 0,
+            "CSP": (self.song.single.challenge.step + self.song.single.challenge.freeze) if
+            self.song.single.challenge
+            else 0,
+            "BDP": (self.song.double.basic.step + self.song.double.basic.freeze) if self.song.double.basic
+            else 0,
+            "DDP": (self.song.double.difficult.step + self.song.double.difficult.freeze) if
+            self.song.double.difficult
+            else 0,
+            "EDP": (self.song.double.expert.step + self.song.double.expert.freeze) if self.song.double.expert
+            else 0,
+            "CDP": (self.song.double.challenge.step + self.song.double.challenge.freeze) if
+            self.song.double.challenge
+            else 0,
         }
         return song_type.get(argument, 0)
 
@@ -142,7 +156,7 @@ class Score(models.Model):
         steps = Score.song_list(self, tip)
 
         if (steps + self.OK) == 0:
-            return "N/A"
+            return None
         else:
             num_steps = self.marvelous + self.perfect + self.great + self.good + self.miss
             marv_score = 1000000 / (steps + self.OK)
@@ -215,6 +229,8 @@ class Score(models.Model):
                 return "D+"
             if 0 <= self.full_score <= 549990:
                 return "D / E"
+        elif self.full_score is None:
+            return "NG"
         else:
             return "N/A"
 
